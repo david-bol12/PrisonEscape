@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.prisongame.ui.HelloController">
+   <ImageView fx:id="image1" fitHeight="196.0" fitWidth="173.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@20250328_115506.jpg" />
+      </image>
+   </ImageView>
+
+    <Label fx:id="welcomeText" />
+    <Button onAction="#onHelloButtonClick" text="change image"/>
+</VBox>
