@@ -1,16 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.prisongame.ui.HelloController">
-   <ImageView fx:id="image1" fitHeight="196.0" fitWidth="173.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@20250328_115506.jpg" />
-      </image>
-   </ImageView>
+<AnchorPane prefHeight="720" prefWidth="1280" style="-fx-background-color: #1e1e1e;" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25">
 
-    <Label fx:id="welcomeText" />
-    <Button onAction="#onHelloButtonClick" text="change image"/>
-</VBox>
+    <!-- Grid: 2 columns (20% inventory | 80% main), 3 rows (10% status | 60% map | 30% bottom) -->
+    <GridPane hgap="10" vgap="10" AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.topAnchor="10">
+
+        <!-- Column percentages -->
+        <columnConstraints>
+            <ColumnConstraints percentWidth="20" />
+            <ColumnConstraints percentWidth="80" />
+        </columnConstraints>
+
+        <!-- Row percentages -->
+        <rowConstraints>
+            <RowConstraints percentHeight="10" />
+            <RowConstraints percentHeight="60" />
+            <RowConstraints percentHeight="30" />
+        </rowConstraints>
+
+        <!-- Left column spans all rows: Inventory -->
+        <VBox style="-fx-border-color: white; -fx-border-width: 1;" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.rowSpan="3">
+            <Label alignment="CENTER" maxHeight="Infinity" maxWidth="Infinity" text="Inventory placeholder" textFill="white" wrapText="true" VBox.vgrow="ALWAYS" />
+        </VBox>
+
+        <!-- Row 0, Col 1: Status Bars -->
+        <HBox alignment="CENTER" style="-fx-border-color: white; -fx-border-width: 1;" GridPane.columnIndex="1" GridPane.rowIndex="0">
+            <Label text="Status Bars place holder" textFill="white" />
+        </HBox>
+
+        <!-- Row 1, Col 1: Map -->
+        <HBox alignment="CENTER" style="-fx-border-color: white; -fx-border-width: 1; -fx-background-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Label text="Map Placeholder" textFill="white" />
+        </HBox>
+
+        <!-- Row 2, Col 1: Bottom section -->
+        <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <!-- Scrollable text area fills remaining height of this row -->
+            <ScrollPane fitToHeight="true" fitToWidth="true" style="-fx-border-color: white; -fx-border-width: 1;" VBox.vgrow="ALWAYS">
+                <TextArea editable="false" style="-fx-control-inner-background: #1e1e1e; -fx-text-fill: white;" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras hendrerit nulla ac enim suscipit posuere. Praesent cursus accumsan tristique. Phasellus sagittis convallis luctus. Curabitur ullamcorper libero nec turpis condimentum interdum maximus eu velit. Nam hendrerit efficitur faucibus. In aliquet velit dolor, non pharetra erat faucibus quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Proin nisi risus, scelerisque nec leo vel, scelerisque mollis ipsum. Mauris gravida sem orci, et porttitor felis ultrices at. Phasellus sit amet porttitor sapien, at ornare urna. Donec non lorem non orci facilisis commodo. Vestibulum vel consequat nisl.  Ut dictum nisi efficitur erat consectetur mollis. Sed luctus diam a dolor aliquam eleifend. Quisque maximus eu sapien et ullamcorper. Donec lobortis lacinia ultricies. Maecenas vitae bibendum ligula. Vivamus porttitor, augue et vehicula porta, mi ipsum vulputate turpis, nec blandit mauris enim bibendum ipsum. Sed tempor ullamcorper ex ac dictum. Vestibulum ullamcorper ligula sit amet diam lobortis, nec consectetur velit facilisis. Duis vitae felis id nulla viverra commodo." wrapText="true">
+               </TextArea>
+            </ScrollPane>
+
+            <!-- Text field stays at its computed height -->
+            <TextField promptText="Text Field" style="-fx-border-color: white; -fx-border-width: 1; -fx-text-fill: white; -fx-background-color: #1e1e1e;" />
+        </VBox>
+    </GridPane>
+</AnchorPane>
