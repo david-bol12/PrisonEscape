@@ -1,4 +1,4 @@
-package org.prisongame.terminal;
+package org.prisongame.commands;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,10 +1,10 @@
-package org.prisongame.ui;
+package org.prisongame.ui.gui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
-public class GameUIController {
+public class GameGUIController {
     @FXML
     TextArea terminalOut;
     @FXML

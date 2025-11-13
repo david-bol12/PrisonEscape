@@ -13,15 +13,24 @@ Overall, it recreates the classic Zork interactive fiction experience with a uni
 emphasizing exploration and simple command-driven gameplay
 */
 
-package org.prisongame.terminal;
+package org.prisongame.game;
+
+import org.prisongame.commands.Command;
+import org.prisongame.commands.Parser;
+import org.prisongame.terminal.Character;
+import org.prisongame.terminal.Item;
+import org.prisongame.terminal.Room;
+import org.prisongame.ui.UI;
 
 import java.util.ArrayList;
 
-public class ZorkULGame {
+public class Game {
     private Parser parser;
-    private Character player;
+    private org.prisongame.terminal.Character player;
+    private UI ui;
 
-    public ZorkULGame() {
+    public Game(String[] args) {
+        ui = new UI(args);
         createRooms();
         parser = new Parser();
     }
@@ -64,22 +73,20 @@ public class ZorkULGame {
     }
 
     public void play() {
+
         printWelcome();
 
-        boolean finished = false;
-        while (!finished) {
-            Command command = parser.getCommand();
-            finished = processCommand(command);
-        }
-        System.out.println("Thank you for playing. Goodbye.");
+//        boolean finished = false;
+//        while (!finished) {
+//            Command command = parser.getCommand();
+//            finished = processCommand(command);
+//        }
+//        System.out.println("Thank you for playing. Goodbye.");
     }
 
     private void printWelcome() {
-        System.out.println();
-        System.out.println("Welcome to the University adventure!");
-        System.out.println("Type 'help' if you need help.");
-        System.out.println();
-        System.out.println(player.getCurrentRoom().getLongDescription());
+        ui.println("Welcome to the University adventure!");
+        ui.println("Type 'help' if you need help.");
     }
 
     private boolean processCommand(Command command) {
@@ -161,7 +168,7 @@ public class ZorkULGame {
     }
 
     public static void main(String[] args) {
-        ZorkULGame game = new ZorkULGame();
+        Game game = new Game(args);
         game.play();
     }
 }

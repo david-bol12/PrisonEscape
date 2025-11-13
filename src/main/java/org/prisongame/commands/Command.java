@@ -1,4 +1,4 @@
-package org.prisongame.terminal;
+package org.prisongame.commands;
 
 public class Command {
     private String commandWord;
