@@ -20,19 +20,20 @@ import org.prisongame.commands.Parser;
 import org.prisongame.terminal.Character;
 import org.prisongame.terminal.Item;
 import org.prisongame.terminal.Room;
-import org.prisongame.ui.UI;
+import org.prisongame.ui.Output;
 
 import java.util.ArrayList;
+import java.util.concurrent.Flow;
 
-public class Game {
-    private Parser parser;
+public class Game implements Flow.Subscriber<String> {
+    private final Parser parser = new Parser();
     private org.prisongame.terminal.Character player;
-    private UI ui;
+    private Output output;
+    private Flow.Subscription subscription;
 
-    public Game(String[] args) {
-        ui = new UI(args);
+    public Game(Output output) {
+        this.output = output;
         createRooms();
-        parser = new Parser();
     }
 
     private void createRooms() {
@@ -85,16 +86,14 @@ public class Game {
     }
 
     private void printWelcome() {
-        ui.println("Welcome to the University adventure!");
-        ui.println("Type 'help' if you need help.");
+        output.println("Welcome to the University adventure!");
     }
 
-    private boolean processCommand(Command command) {
+    private void processCommand(Command command) {
         String commandWord = command.getCommandWord();
 
         if (commandWord == null) {
-            System.out.println("I don't understand your command...");
-            return false;
+            output.println("I don't understand your command...");
         }
 
         switch (commandWord) {
@@ -105,53 +104,51 @@ public class Game {
                 goRoom(command);
                 break;
             case "search":
-                System.out.println(player.getCurrentRoom().searchRoom());
+                output.println(player.getCurrentRoom().searchRoom());
                 break;
             case "pick-up":
                 Item pickupItem = Item.checkItemAvailable(command.getSecondWord(), player.getCurrentRoom().getItems());
                 if (pickupItem == null) {
-                    System.out.println("I can't find that item!");
+                    output.println("I can't find that item!");
                 } else {
-                    System.out.println(player.pickUpItem(pickupItem));
+                    output.println(player.pickUpItem(pickupItem));
                 }
                 break;
             case "inventory":
-                System.out.println("Inventory:");
+                output.println("Inventory:");
                 for (Item item : player.getInventory()) {
-                    System.out.println(item.getName());
+                    output.println(item.getName());
                 }
                 break;
             case "place":
                 Item placeItem = Item.checkItemAvailable(command.getSecondWord(), player.getInventory());
                 if (placeItem == null) {
-                    System.out.println("I don't have that item!");
+                    output.println("I don't have that item!");
                 } else {
                     player.placeItem(placeItem);
                 }
                 break;
             case "quit":
                 if (command.hasSecondWord()) {
-                    System.out.println("Quit what?");
-                    return false;
+                    output.println("Quit what?");
                 } else {
-                    return true; // signal to quit
+                     // signal to quit
                 }
             default:
-                System.out.println("I don't know what you mean...");
+                output.println("I don't know what you mean...");
                 break;
         }
-        return false;
     }
 
     private void printHelp() {
-        System.out.println("You are lost. You are alone. You wander around the university.");
-        System.out.print("Your command words are: ");
+        output.println("You are lost. You are alone. You wander around the university.");
+        output.print("Your command words are: ");
         parser.showCommands();
     }
 
     private void goRoom(Command command) {
         if (!command.hasSecondWord()) {
-            System.out.println("Go where?");
+            output.println("Go where?");
             return;
         }
 
@@ -163,12 +160,31 @@ public class Game {
             System.out.println("There is no door!");
         } else {
             player.setCurrentRoom(nextRoom);
-            System.out.println(player.getCurrentRoom().getLongDescription());
+            output.println(player.getCurrentRoom().getLongDescription());
         }
     }
 
-    public static void main(String[] args) {
-        Game game = new Game(args);
-        game.play();
+    @Override
+    public void onSubscribe(Flow.Subscription subscription) {
+        this.subscription = subscription;
+        subscription.request(1);
+    }
+
+    @Override
+    public void onNext(String item) {
+        output.printCommand(item);
+        Command command = parser.parseCommand(item);
+        processCommand(command);
+        subscription.request(1);
+    }
+
+    @Override
+    public void onError(Throwable throwable) {
+
+    }
+
+    @Override
+    public void onComplete() {
+
     }
 }

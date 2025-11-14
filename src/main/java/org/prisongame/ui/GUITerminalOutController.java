@@ -1,4 +1,4 @@
-package org.prisongame.ui.gui;
+package org.prisongame.ui;
 
 import javafx.animation.KeyFrame;
 import javafx.scene.control.TextArea;
@@ -7,7 +7,7 @@ import javafx.util.Duration;
 
 import java.util.concurrent.Flow;
 
-public class GUITerminalOutController implements Flow.Subscriber<String> {
+public class GUITerminalOutController implements Flow.Subscriber<String>, Output {
     private final TextArea terminalOut;
     private Flow.Subscription subscription;
 

@@ -1,10 +1,5 @@
 package org.prisongame.commands;
 
-import org.prisongame.ui.TextOut;
-
-import java.util.Scanner;
-import java.util.concurrent.Flow;
-
 public class Parser {
     private CommandWords commands;
 

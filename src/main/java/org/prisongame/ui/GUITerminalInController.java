@@ -1,6 +1,8 @@
-package org.prisongame.ui.gui;
+package org.prisongame.ui;
 
 import javafx.scene.control.TextField;
+import org.prisongame.commands.Command;
+import org.prisongame.commands.Parser;
 
 import java.util.concurrent.SubmissionPublisher;
 
@@ -8,6 +10,7 @@ public class GUITerminalInController extends SubmissionPublisher<String> {
 
     TextField terminalIn;
     String hintText;
+    Parser parser = new Parser();
 
     public GUITerminalInController(TextField terminalIn) {
         this.terminalIn = terminalIn;
