@@ -1,5 +1,7 @@
 package org.prisongame.terminal;
 
+import org.prisongame.game.GameMap;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +21,11 @@ public class Room {
         this.description = description;
         this.items = new ArrayList<Item>();
         exits = new HashMap<>();
+    }
+
+    public Room(String description, GameMap... exits) {
+        this.description = description;
+        this.items = new ArrayList<Item>();
     }
 
     public String getDescription() {

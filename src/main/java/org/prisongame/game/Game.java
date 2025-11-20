@@ -33,44 +33,6 @@ public class Game implements Flow.Subscriber<String> {
 
     public Game(Output output) {
         this.output = output;
-        createRooms();
-    }
-
-    private void createRooms() {
-        Room outside, theatre, pub, lab, office, iseRoom;
-        Item sword;
-        ArrayList<Item> labItems = new ArrayList<Item>();
-
-        // create items
-        sword = new Item("Sword", "Looks Sharp");
-        labItems.add(sword);
-
-        // create rooms
-        outside = new Room("outside the main entrance of the university");
-        theatre = new Room("in a lecture theatre");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab", labItems);
-        office = new Room("in the computing admin office");
-        iseRoom = new Room("in ise room");
-
-        // initialise room exits
-        outside.setExit("east", theatre);
-        outside.setExit("south", lab);
-        outside.setExit("west", pub);
-
-        theatre.setExit("west", outside);
-
-        pub.setExit("east", outside);
-
-        lab.setExit("north", outside);
-        lab.setExit("east", office);
-
-        office.setExit("west", lab);
-
-        iseRoom.setExit("north", pub);
-
-        // create the player character and start outside
-        player = new Character("player", outside);
     }
 
     public void play() {

@@ -6,6 +6,6 @@ module org.prisongame.ui {
 
     exports org.prisongame.ui;
     opens org.prisongame.ui to javafx.fxml;
-    exports org.prisongame.ui.cli;
-    opens org.prisongame.ui.cli to javafx.fxml;
+    exports org.prisongame.game;
+    opens org.prisongame.game to javafx.fxml;
 }

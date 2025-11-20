@@ -2,13 +2,12 @@ package org.prisongame.ui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.prisongame.game.Game;
+import org.prisongame.game.GameMap;
 
 import java.awt.*;
-import java.io.IOException;
-import java.util.Objects;
+import java.awt.geom.Point2D;
 
 public class GameGUI extends Application{
 
@@ -16,9 +15,9 @@ public class GameGUI extends Application{
     public void start(Stage stage) throws Exception {
         stage.setTitle("Hello!");
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("home.fxml"));
-        HomeScreen homeScreen = new HomeScreen(fxmlLoader);
+        HomeScreen homeScreen = new HomeScreen(fxmlLoader, GameMap.GUARDS_QUARTERS);
         stage.setMaximized(true);
-        stage.setResizable(false);
+        stage.setResizable(true);
         stage.setScene(homeScreen);
         stage.show();
         Game game = new Game(homeScreen.getGuiTerminalOutController());
