@@ -16,7 +16,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.StackPane?>
-<AnchorPane fx:controller="org.prisongame.ui.HomeScreenController" prefHeight="720" prefWidth="1280" style="-fx-background-color: #1e1e1e;" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25">
+<AnchorPane fx:controller="org.prisongame.ui.HomeFXMLController" prefHeight="720" prefWidth="1280" style="-fx-background-color: #1e1e1e;" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25">
 
     <!-- Grid: 2 columns (20% inventory | 80% main), 3 rows (10% status | 60% map | 30% bottom) -->
     <GridPane hgap="10" vgap="10" AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.topAnchor="10">
@@ -36,8 +36,8 @@
 
         <!-- Left column spans all rows: Inventory -->
         <VBox styleClass="placeholders" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.rowSpan="3">
-            <Label alignment="TOP_CENTER" maxHeight="Infinity" maxWidth="Infinity" text="Inventory" textFill="white" wrapText="true"/>
-            <TextArea fx:id="inventoryLabel" editable="false" text="" VBox.vgrow="ALWAYS"></TextArea>
+            <Label alignment="TOP_CENTER" maxHeight="Infinity" maxWidth="Infinity" text="Inventory" textFill="white" wrapText="true" style="-fx-font-size: 36"/>
+            <TextArea fx:id="inventoryLabel" editable="false" text="" VBox.vgrow="ALWAYS"  styleClass="borderless-text-area"></TextArea>
         </VBox>
 
         <!-- Row 0, Col 1: Status Bars -->
@@ -64,8 +64,8 @@
         <!-- Row 2, Col 1: Bottom section -->
         <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="2">
             <!-- Scrollable text area fills remaining height of this row -->
-            <ScrollPane fitToHeight="true" fitToWidth="true" style="-fx-border-color: white; -fx-border-width: 1;" VBox.vgrow="ALWAYS">
-                <TextArea editable="false" fx:id="terminalOut" style="-fx-control-inner-background: #1e1e1e; -fx-text-fill: white;" wrapText="true">
+            <ScrollPane fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
+                <TextArea editable="false" fx:id="terminalOut" styleClass="borderless-text-area" wrapText="true">
                </TextArea>
             </ScrollPane>
 

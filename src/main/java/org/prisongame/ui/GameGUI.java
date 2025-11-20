@@ -15,13 +15,16 @@ public class GameGUI extends Application{
     public void start(Stage stage) throws Exception {
         stage.setTitle("Hello!");
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("home.fxml"));
-        HomeScreen homeScreen = new HomeScreen(fxmlLoader, GameMap.GUARDS_QUARTERS);
+        HomeScreen homeScreen = new HomeScreen(fxmlLoader, GameMap.CELL_BLOCK);
         stage.setMaximized(true);
         stage.setResizable(true);
         stage.setScene(homeScreen);
         stage.show();
         Game game = new Game(homeScreen.getGuiTerminalOutController());
         homeScreen.getGuiTerminalInController().subscribe(game);
+        game.getPlayer().getLocationNotifier().addListener((_, _, newValue) -> {
+            homeScreen.setAvatarLocation(newValue);
+        });
         game.play();
     }
 }

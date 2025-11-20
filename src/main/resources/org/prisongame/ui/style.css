@@ -12,3 +12,26 @@
     -fx-border-width: 1;
     -fx-background-color: black;
 }
+
+/* Outer TextArea */
+.text-area {
+    -fx-border-color: white;
+    -fx-border-width: 2;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-control-inner-background: #1e1e1e;
+    -fx-text-fill: white;
+}
+
+/* The ScrollPane that wraps the text content */
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+}
+
+
+
+

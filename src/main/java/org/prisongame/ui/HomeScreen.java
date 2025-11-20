@@ -3,39 +3,33 @@ package org.prisongame.ui;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import org.prisongame.game.GameMap;
 
-import java.awt.*;
-import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.util.Objects;
 
 public class HomeScreen extends Scene {
 
-    private FXMLLoader fxmlLoader;
-    private HomeScreenController homeScreenController;
-    private GUITerminalOutController guiTerminalOutController;
-    private GUITerminalInController guiTerminalInController;
-    private AvatarController avatarController;
+    private final HomeFXMLController homeScreenController;
+    private final GUITerminalOutController guiTerminalOutController;
+    private final GUITerminalInController guiTerminalInController;
+    private final AvatarController avatarController;
     private Bounds mapBounds;
     private String inventoryLabel;
 
 
     public HomeScreen(FXMLLoader fxmlLoader, GameMap startLocation) throws IOException {
         super(fxmlLoader.load());
-        this.fxmlLoader = fxmlLoader;
         getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
         homeScreenController = fxmlLoader.getController();
-        guiTerminalOutController = new GUITerminalOutController(homeScreenController.terminalOut);
-        guiTerminalInController = new GUITerminalInController(homeScreenController.terminalIn);
+        this.guiTerminalOutController = new GUITerminalOutController(homeScreenController.terminalOut);
+        this.guiTerminalInController = new GUITerminalInController(homeScreenController.terminalIn);
         this.mapBounds = homeScreenController.map.boundsInParentProperty().get();
-        avatarController = new AvatarController(homeScreenController.avatar, startLocation, mapBounds);
+        this.avatarController = new AvatarController(homeScreenController.avatar, startLocation, mapBounds);
         getMap().boundsInParentProperty().addListener(((_, _, newValue) -> {
             mapBounds = newValue;
-            avatarController.setLocation(avatarController.location, mapBounds);
+            avatarController.setLocation(avatarController.getLocation(), mapBounds);
         }));
     }
 
@@ -47,8 +41,8 @@ public class HomeScreen extends Scene {
         return guiTerminalOutController;
     }
 
-    public AvatarController getAvatarController() {
-        return avatarController;
+    public void setAvatarLocation(GameMap location) {
+        avatarController.setLocation(location, mapBounds);
     }
 
     public ImageView getMap() {

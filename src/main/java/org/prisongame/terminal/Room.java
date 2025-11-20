@@ -1,5 +1,6 @@
 package org.prisongame.terminal;
 
+import org.prisongame.character.NPC;
 import org.prisongame.game.GameMap;
 
 import java.util.ArrayList;
@@ -10,21 +11,34 @@ public class Room {
     private String description;
     private Map<String, Room> exits; // Map direction to neighboring Room
     private ArrayList<Item> items;
+    private ArrayList<NPC> npcs;
+    private String name;
 
-    public Room(String description, ArrayList<Item> items) {
+    public Room(String name, String description, ArrayList<Item> items) {
+        this.name = name;
         this.description = description;
         this.items = items;
+        this.npcs = new ArrayList<NPC>();
         exits = new HashMap<>();
     }
 
-    public Room(String description) {
+    public Room(String name, String description, ArrayList<Item> items, ArrayList<NPC> npcs) {
+        this.name = name;
+        this.description = description;
+        this.items = items;
+        this.npcs = npcs;
+        exits = new HashMap<>();
+    }
+
+    public Room(String name, String description) {
         this.description = description;
         this.items = new ArrayList<Item>();
         exits = new HashMap<>();
     }
 
-    public Room(String description, GameMap... exits) {
-        this.description = description;
+    public Room(String name) {
+        this.name = name;
+        this.description = null;
         this.items = new ArrayList<Item>();
     }
 
@@ -82,5 +96,17 @@ public class Room {
 
     public ArrayList<Item> getItems() {
         return items;
+    }
+
+    public ArrayList<NPC> getNpcs() {
+        return npcs;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void addNpc(NPC npc) {
+        npcs.add(npc);
     }
 }

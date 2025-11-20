@@ -15,24 +15,25 @@ emphasizing exploration and simple command-driven gameplay
 
 package org.prisongame.game;
 
+import org.prisongame.character.Player;
 import org.prisongame.commands.Command;
 import org.prisongame.commands.Parser;
-import org.prisongame.terminal.Character;
+import org.prisongame.character.Character;
 import org.prisongame.terminal.Item;
 import org.prisongame.terminal.Room;
 import org.prisongame.ui.Output;
 
-import java.util.ArrayList;
 import java.util.concurrent.Flow;
 
 public class Game implements Flow.Subscriber<String> {
     private final Parser parser = new Parser();
-    private org.prisongame.terminal.Character player;
+    private Player player;
     private Output output;
     private Flow.Subscription subscription;
 
     public Game(Output output) {
         this.output = output;
+        this.player = new Player("David", GameMap.CELL_BLOCK);
     }
 
     public void play() {
@@ -56,49 +57,50 @@ public class Game implements Flow.Subscriber<String> {
 
         if (commandWord == null) {
             output.println("I don't understand your command...");
-        }
+        } else {
 
-        switch (commandWord) {
-            case "help":
-                printHelp();
-                break;
-            case "go":
-                goRoom(command);
-                break;
-            case "search":
-                output.println(player.getCurrentRoom().searchRoom());
-                break;
-            case "pick-up":
-                Item pickupItem = Item.checkItemAvailable(command.getSecondWord(), player.getCurrentRoom().getItems());
-                if (pickupItem == null) {
-                    output.println("I can't find that item!");
-                } else {
-                    output.println(player.pickUpItem(pickupItem));
-                }
-                break;
-            case "inventory":
-                output.println("Inventory:");
-                for (Item item : player.getInventory()) {
-                    output.println(item.getName());
-                }
-                break;
-            case "place":
-                Item placeItem = Item.checkItemAvailable(command.getSecondWord(), player.getInventory());
-                if (placeItem == null) {
-                    output.println("I don't have that item!");
-                } else {
-                    player.placeItem(placeItem);
-                }
-                break;
-            case "quit":
-                if (command.hasSecondWord()) {
-                    output.println("Quit what?");
-                } else {
-                     // signal to quit
-                }
-            default:
-                output.println("I don't know what you mean...");
-                break;
+            switch (commandWord) {
+                case "help":
+                    printHelp();
+                    break;
+                case "go":
+                    goRoom(command);
+                    break;
+                case "search":
+                    output.println(player.getCurrentRoom().searchRoom());
+                    break;
+                case "pick-up":
+                    Item pickupItem = Item.checkItemAvailable(command.getSecondWord(), player.getCurrentRoom().getItems());
+                    if (pickupItem == null) {
+                        output.println("I can't find that item!");
+                    } else {
+                        output.println(player.pickUpItem(pickupItem));
+                    }
+                    break;
+                case "inventory":
+                    output.println("Inventory:");
+                    for (Item item : player.getInventory()) {
+                        output.println(item.getName());
+                    }
+                    break;
+                case "place":
+                    Item dropItem = Item.checkItemAvailable(command.getSecondWord(), player.getInventory());
+                    if (dropItem == null) {
+                        output.println("I don't have that item!");
+                    } else {
+                        player.dropItem(dropItem);
+                    }
+                    break;
+                case "quit":
+                    if (command.hasSecondWord()) {
+                        output.println("Quit what?");
+                    } else {
+                        // signal to quit
+                    }
+                default:
+                    output.println("I don't know what you mean...");
+                    break;
+            }
         }
     }
 
@@ -114,16 +116,25 @@ public class Game implements Flow.Subscriber<String> {
             return;
         }
 
-        String direction = command.getSecondWord();
-
-        Room nextRoom = player.getCurrentRoom().getExit(direction);
-
-        if (nextRoom == null) {
-            System.out.println("There is no door!");
-        } else {
-            player.setCurrentRoom(nextRoom);
-            output.println(player.getCurrentRoom().getLongDescription());
+        for(GameMap location : GameMap.values()) {
+            if(location.getRoom().getName().toLowerCase().equals(command.getSecondWord())) {
+                player.setLocation(location);
+            }
         }
+
+//        String direction = command.getSecondWord();
+//
+//        Room nextRoom = player.getCurrentRoom().getExit(direction);
+//
+//        if (nextRoom == null) {
+//            System.out.println("There is no door!");
+//        } else {
+//            output.println(player.getCurrentRoom().getLongDescription());
+//        }
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
     @Override

@@ -17,7 +17,6 @@ public class Item {
     }
 
     public static Item checkItemAvailable(String itemName, ArrayList<Item> items) {
-        boolean itemAvailable = false;
         for (Item item : items) {
             if (item.getName().toLowerCase().equals(itemName)) {
                 return item;
