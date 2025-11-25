@@ -18,11 +18,12 @@ package org.prisongame.game;
 import org.prisongame.character.Player;
 import org.prisongame.commands.Command;
 import org.prisongame.commands.Parser;
-import org.prisongame.character.Character;
-import org.prisongame.terminal.Item;
-import org.prisongame.terminal.Room;
+import org.prisongame.items.Cookie;
+import org.prisongame.map.GameMap;
+import org.prisongame.items.Item;
 import org.prisongame.ui.Output;
 
+import java.util.ArrayList;
 import java.util.concurrent.Flow;
 
 public class Game implements Flow.Subscriber<String> {
@@ -33,7 +34,10 @@ public class Game implements Flow.Subscriber<String> {
 
     public Game(Output output) {
         this.output = output;
-        this.player = new Player("David", GameMap.CELL_BLOCK);
+        ArrayList<Item> items = new ArrayList<Item>();
+        items.add(new Cookie());
+        this.player = new Player("David", GameMap.CELL_BLOCK, items);
+        this.player.setEnergy(50);
     }
 
     public void play() {
@@ -60,11 +64,14 @@ public class Game implements Flow.Subscriber<String> {
         } else {
 
             switch (commandWord) {
+                case "intellect":
+                    player.setIntellect(player.getIntellect() + 10);
+                    break;
                 case "help":
                     printHelp();
                     break;
                 case "go":
-                    goRoom(command);
+                    output.println(player.go(command.getSecondWord()));
                     break;
                 case "search":
                     output.println(player.getCurrentRoom().searchRoom());
@@ -83,19 +90,22 @@ public class Game implements Flow.Subscriber<String> {
                         output.println(item.getName());
                     }
                     break;
-                case "place":
+                case "drop":
                     Item dropItem = Item.checkItemAvailable(command.getSecondWord(), player.getInventory());
                     if (dropItem == null) {
                         output.println("I don't have that item!");
                     } else {
-                        player.dropItem(dropItem);
+                        output.println(player.dropItem(dropItem));
                     }
+                    break;
+                case "eat":
+                    output.println(player.eat(command.getSecondWord()));
                     break;
                 case "quit":
                     if (command.hasSecondWord()) {
                         output.println("Quit what?");
                     } else {
-                        // signal to quit
+
                     }
                 default:
                     output.println("I don't know what you mean...");
@@ -108,29 +118,6 @@ public class Game implements Flow.Subscriber<String> {
         output.println("You are lost. You are alone. You wander around the university.");
         output.print("Your command words are: ");
         parser.showCommands();
-    }
-
-    private void goRoom(Command command) {
-        if (!command.hasSecondWord()) {
-            output.println("Go where?");
-            return;
-        }
-
-        for(GameMap location : GameMap.values()) {
-            if(location.getRoom().getName().toLowerCase().equals(command.getSecondWord())) {
-                player.setLocation(location);
-            }
-        }
-
-//        String direction = command.getSecondWord();
-//
-//        Room nextRoom = player.getCurrentRoom().getExit(direction);
-//
-//        if (nextRoom == null) {
-//            System.out.println("There is no door!");
-//        } else {
-//            output.println(player.getCurrentRoom().getLongDescription());
-//        }
     }
 
     public Player getPlayer() {

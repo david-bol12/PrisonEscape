@@ -1,24 +1,23 @@
 package org.prisongame.character;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import org.prisongame.game.GameMap;
-import org.prisongame.terminal.Item;
-import org.prisongame.terminal.Room;
-
+import org.prisongame.map.GameMap;
+import org.prisongame.items.Item;
 import java.util.ArrayList;
 
 public abstract class Character {
     protected String name;
     protected ArrayList<Item> inventory;
+    protected GameMap location;
 
-    public Character(String name) {
+    public Character(String name, GameMap location) {
         this.name = name;
+        this.location = location;
         this.inventory = new ArrayList<Item>();
     }
 
-    public Character(String name, ArrayList<Item> inventory) {
+    public Character(String name, GameMap location, ArrayList<Item> inventory) {
         this.name = name;
+        this.location = location;
         this.inventory = inventory;
     }
 
@@ -26,7 +25,9 @@ public abstract class Character {
         return name;
     }
 
-    public abstract GameMap getLocation();
+    public GameMap getLocation() {
+        return location;
+    };
 
     public abstract void setLocation(GameMap location);
 

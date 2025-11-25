@@ -2,9 +2,8 @@ package org.prisongame.ui;
 
 import javafx.geometry.Bounds;
 import javafx.scene.image.ImageView;
-import org.prisongame.game.GameMap;
+import org.prisongame.map.GameMap;
 
-import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.HashMap;
 import java.util.Map;

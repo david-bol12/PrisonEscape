@@ -16,6 +16,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.Region?>
 <AnchorPane fx:controller="org.prisongame.ui.HomeFXMLController" prefHeight="720" prefWidth="1280" style="-fx-background-color: #1e1e1e;" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25">
 
     <!-- Grid: 2 columns (20% inventory | 80% main), 3 rows (10% status | 60% map | 30% bottom) -->
@@ -36,13 +39,44 @@
 
         <!-- Left column spans all rows: Inventory -->
         <VBox styleClass="placeholders" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.rowSpan="3">
-            <Label alignment="TOP_CENTER" maxHeight="Infinity" maxWidth="Infinity" text="Inventory" textFill="white" wrapText="true" style="-fx-font-size: 36"/>
-            <TextArea fx:id="inventoryLabel" editable="false" text="" VBox.vgrow="ALWAYS"  styleClass="borderless-text-area"></TextArea>
+            <HBox alignment="CENTER">
+                <Label text="Money: $" textFill="white" style="-fx-font-size: 34;"/>
+                <Label text="20" textFill="white" style="-fx-font-size: 34;"/>
+            </HBox>
+            <Label alignment="TOP_CENTER" maxHeight="Infinity" maxWidth="Infinity" text="Inventory" textFill="white" wrapText="true" style="-fx-font-size: 36" fx:id="inventoryLabel1"/>
+            <TextArea fx:id="inventoryLabel" editable="false" VBox.vgrow="ALWAYS"  styleClass="inventory" style="-fx-font-size: 34;"/>
         </VBox>
 
         <!-- Row 0, Col 1: Status Bars -->
-        <HBox alignment="CENTER" styleClass="placeholders" GridPane.columnIndex="1" GridPane.rowIndex="0">
-            <Label text="Status Bars place holder" textFill="white" />
+        <HBox alignment="CENTER" styleClass="placeholders" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.hgrow="ALWAYS" spacing="10">
+            <GridPane hgap="40" HBox.hgrow="ALWAYS">
+                <padding>
+                    <Insets top="20" bottom="20" left="20" right="20"/>
+                </padding>
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="50" />
+                    <ColumnConstraints percentWidth="50" />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints percentHeight="50" />
+                    <RowConstraints percentHeight="50" />
+                </rowConstraints>
+                <HBox GridPane.columnIndex="0" GridPane.rowIndex="0" HBox.hgrow="ALWAYS" alignment="CENTER_LEFT" spacing="20">
+                    <Label textFill="white" text="Energy"/>
+                    <ProgressBar fx:id="energyBar" styleClass="statusBar" progress="0.25" maxHeight="20" HBox.hgrow="ALWAYS" maxWidth="${intellectBar.width}" style="-fx-accent: #fff700;"/>
+                    <Label fx:id="energyBarLabel" textFill="white" text="20"/>
+                </HBox>
+                <HBox GridPane.columnIndex="1" GridPane.rowIndex="0" HBox.hgrow="ALWAYS" alignment="CENTER" spacing="20">
+                    <Label textFill="white" text="Strength"/>
+                    <ProgressBar fx:id="strengthBar" styleClass="statusBar" progress="0.25" maxHeight="20" HBox.hgrow="ALWAYS" maxWidth="Infinity" style="-fx-accent: #ff0000;"/>
+                    <Label fx:id="strengthBarLabel" textFill="white" text="20"/>
+                </HBox>
+                <HBox GridPane.columnIndex="0" GridPane.rowIndex="1" HBox.hgrow="ALWAYS" alignment="CENTER" spacing="20">
+                    <Label textFill="white" text="Intellect"/>
+                    <ProgressBar fx:id="intellectBar" styleClass="statusBar" maxHeight="20" HBox.hgrow="ALWAYS" maxWidth="Infinity" style="-fx-accent: #00ffff;"/>
+                    <Label fx:id="intellectBarLabel" textFill="white"/>
+                </HBox>
+            </GridPane>
         </HBox>
 
         <!-- Row 1, Col 1: Map -->

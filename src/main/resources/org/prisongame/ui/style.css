@@ -32,6 +32,25 @@
     -fx-border-width: 0;
 }
 
+.inventory .text {
+    -fx-text-alignment: center;
+    -fx-font-size: 36;
+}
+
+
+.statusBar {
+}
+
+.statusBar > .track{
+    -fx-background-color: black;
+    -fx-border-width: 2;
+    -fx-border-color: white;
+}
+
+.statusBar > .bar {
+    -fx-background-radius: 0;
+}
+
 
 
 

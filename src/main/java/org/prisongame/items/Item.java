@@ -1,5 +1,7 @@
-package org.prisongame.terminal;
+package org.prisongame.items;
 
+
+import org.prisongame.map.Room;
 
 import java.util.ArrayList;
 

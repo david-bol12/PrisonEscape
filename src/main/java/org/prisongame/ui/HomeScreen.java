@@ -4,29 +4,36 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
-import org.prisongame.game.GameMap;
+import org.prisongame.map.GameMap;
 
 import java.io.IOException;
 import java.util.Objects;
 
 public class HomeScreen extends Scene {
 
-    private final HomeFXMLController homeScreenController;
+    private final HomeFXMLController homeFXMLController;
     private final GUITerminalOutController guiTerminalOutController;
     private final GUITerminalInController guiTerminalInController;
     private final AvatarController avatarController;
     private Bounds mapBounds;
-    private String inventoryLabel;
+    private final InventoryController inventoryController;
+    private final StatusBarController energyBar;
+    private final StatusBarController intellectBar;
+    private final StatusBarController strengthBar;
 
 
     public HomeScreen(FXMLLoader fxmlLoader, GameMap startLocation) throws IOException {
         super(fxmlLoader.load());
         getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
-        homeScreenController = fxmlLoader.getController();
-        this.guiTerminalOutController = new GUITerminalOutController(homeScreenController.terminalOut);
-        this.guiTerminalInController = new GUITerminalInController(homeScreenController.terminalIn);
-        this.mapBounds = homeScreenController.map.boundsInParentProperty().get();
-        this.avatarController = new AvatarController(homeScreenController.avatar, startLocation, mapBounds);
+        homeFXMLController = fxmlLoader.getController();
+        this.guiTerminalOutController = new GUITerminalOutController(homeFXMLController.terminalOut);
+        this.guiTerminalInController = new GUITerminalInController(homeFXMLController.terminalIn);
+        this.mapBounds = homeFXMLController.map.boundsInParentProperty().get();
+        this.avatarController = new AvatarController(homeFXMLController.avatar, startLocation, mapBounds);
+        this.energyBar = new StatusBarController(100, homeFXMLController.energyBarLabel, homeFXMLController.energyBar);
+        this.intellectBar = new StatusBarController(0, homeFXMLController.intellectBarLabel, homeFXMLController.intellectBar);
+        this.strengthBar = new StatusBarController(0, homeFXMLController.strengthBarLabel, homeFXMLController.strengthBar);
+        this.inventoryController = new InventoryController(homeFXMLController.inventoryLabel);
         getMap().boundsInParentProperty().addListener(((_, _, newValue) -> {
             mapBounds = newValue;
             avatarController.setLocation(avatarController.getLocation(), mapBounds);
@@ -46,7 +53,22 @@ public class HomeScreen extends Scene {
     }
 
     public ImageView getMap() {
-        return homeScreenController.map;
+        return homeFXMLController.map;
     }
 
+    public InventoryController getInventoryController() {
+        return inventoryController;
+    }
+
+    public StatusBarController getEnergyBar() {
+        return energyBar;
+    }
+
+    public StatusBarController getIntellectBar() {
+        return intellectBar;
+    }
+
+    public StatusBarController getStrengthBar() {
+        return strengthBar;
+    }
 }
