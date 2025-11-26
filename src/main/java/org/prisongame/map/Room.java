@@ -3,10 +3,11 @@ package org.prisongame.map;
 import org.prisongame.character.NPC;
 import org.prisongame.items.Item;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Room {
+public class Room implements Serializable {
 
     private final String[] STANDARD_COMMANDS = new String[] {
             "exit",
@@ -14,44 +15,35 @@ public class Room {
     };
 
     private String description; // Map direction to neighboring Room
-    private ArrayList<Item> items;
+    private ArrayList<Item> items = new ArrayList<Item>();
     private ArrayList<NPC> npcs;
     private String name;
-    final GameMap.Floor floor;
+    final Location.Floor floor;
     private boolean locked = false;
     private ArrayList<String> validCommands;
-    private ArrayList<GameMap> exits = new ArrayList<GameMap>();
+    private ArrayList<Location> exits = new ArrayList<Location>();
 
-    public Room(String name, String description, ArrayList<Item> items, GameMap.Floor floor, ArrayList<String> validCommands) {
+    public Room(String name, String description, Location.Floor floor, ArrayList<String> validCommands) {
         this.name = name;
         this.description = description;
-        this.items = items;
         this.floor = floor;
         this.validCommands = validCommands;
         this.npcs = new ArrayList<NPC>();
     }
 
-    public Room(String name, String description, ArrayList<Item> items, ArrayList<NPC> npcs, GameMap.Floor floor, ArrayList<String> validCommands) {
+    public Room(String name, String description, ArrayList<NPC> npcs, Location.Floor floor, ArrayList<String> validCommands) {
         this.name = name;
         this.description = description;
-        this.items = items;
         this.npcs = npcs;
         this.floor = floor;
         this.validCommands = validCommands;
     }
 
-    public Room(String name, String description, GameMap.Floor floor, ArrayList<Item> items) {
-        this.description = description;
-        this.floor = floor;
-        this.validCommands = new ArrayList<String>(List.of(STANDARD_COMMANDS));
-        this.items = new ArrayList<Item>();
-    }
-
-    public Room(String name, GameMap.Floor floor) {
+    public Room(String name, String description, Location.Floor floor) {
         this.name = name;
         this.floor = floor;
         this.validCommands = new ArrayList<String>(List.of(STANDARD_COMMANDS));
-        this.description = null;
+        this.description = description;
         this.items = new ArrayList<Item>();
     }
 
@@ -115,23 +107,23 @@ public class Room {
         this.locked = locked;
     }
 
-    public GameMap.Floor getFloor() {
+    public Location.Floor getFloor() {
         return floor;
     }
 
-    public ArrayList<GameMap> getExits() {
+    public ArrayList<Location> getExits() {
         return exits;
     }
 
-    public void setExits(ArrayList<GameMap> exits) {
+    public void setExits(ArrayList<Location> exits) {
         this.exits = exits;
     }
 
-    public void addExits(GameMap... exits) {
+    public void addExits(Location... exits) {
         this.exits.addAll(List.of(exits));
     }
 
-    public void removeExits(GameMap... exits) {
+    public void removeExits(Location... exits) {
         this.exits.removeAll(List.of(exits));
     }
 

@@ -3,6 +3,7 @@ module org.prisongame.ui {
     requires javafx.fxml;
     requires java.desktop;
     requires javafx.graphics;
+    requires javafx.base;
 
     exports org.prisongame.ui;
     opens org.prisongame.ui to javafx.fxml;

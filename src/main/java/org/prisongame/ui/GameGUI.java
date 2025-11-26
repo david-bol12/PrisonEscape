@@ -7,40 +7,67 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import org.prisongame.character.Player;
 import org.prisongame.game.Game;
-import org.prisongame.map.GameMap;
+import org.prisongame.map.GameMapState;
+import org.prisongame.map.Location;
 import org.prisongame.items.Item;
+import org.prisongame.map.Room;
 
+import java.io.*;
 import java.util.List;
+import java.util.Map;
 
 public class GameGUI extends Application{
+
+    Game game = null;
 
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Hello!");
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/org/prisongame/ui/home.fxml"));
-        HomeScreen homeScreen = new HomeScreen(fxmlLoader, GameMap.CELL_BLOCK);
+        File saveDir = new File("saves/save1");
+        saveDir.mkdirs(); // ensure path exists
+        File playerFile = new File(saveDir, "player.ser");
+        File mapFile = new File(saveDir, "map.ser");
+
+        Player player;
+        try {
+            player = retrieveGame(playerFile, mapFile);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            player = new Player("David", Location.CANTEEN);
+            GameMapState.createMapState();
+        }
+
+        HomeScreen homeScreen = new HomeScreen(fxmlLoader);
         stage.setMaximized(true);
         stage.setResizable(true);
         stage.setScene(homeScreen);
-        stage.show();
-        Game game = new Game(homeScreen.getGuiTerminalOutController());
-        Player player = game.getPlayer();
-        homeScreen.getGuiTerminalInController().subscribe(game);
-        player.getLocationNotifier().addListener((_, _, newValue) -> {
+
+
+        this.game = new Game(homeScreen.getGuiTerminalOutController(), player);
+        stage.setOnCloseRequest((_) -> {
+            saveGame(playerFile, mapFile);
+        });
+        PlayerUIController playerUIController = player.getPlayerUIController();
+        homeScreen.getGuiTerminalInController().subscribe(this.game);
+        homeScreen.setAvatarLocation(playerUIController.getLocationNotifier().get());
+        playerUIController.getLocationNotifier().addListener((_, _, newValue) -> {
             Platform.runLater(() -> homeScreen.setAvatarLocation(newValue));
         });
         homeScreen.getEnergyBar().setStatus(player.getEnergy());
-        player.energyProperty().addListener((_, _, newValue) -> {
+        playerUIController.getEnergyNotifier().addListener((_, _, newValue) -> {
             Platform.runLater(() -> homeScreen.getEnergyBar().setStatus(newValue));
         });
-        player.intellectProperty().addListener((_, _, newValue) -> {
+        homeScreen.getIntellectBar().setStatus(player.getEnergy());
+        playerUIController.getIntellectNotifier().addListener((_, _, newValue) -> {
             Platform.runLater(() -> homeScreen.getIntellectBar().setStatus(newValue));
         });
-        player.strengthProperty().addListener((_, _, newValue) -> {
+        homeScreen.getStrengthBar().setStatus(player.getEnergy());
+        playerUIController.getStrengthNotifier().addListener((_, _, newValue) -> {
             Platform.runLater(() -> homeScreen.getStrengthBar().setStatus(newValue));
         });
         homeScreen.getInventoryController().addItems(player.getInventory());
-        player.getInventoryNotifier().addListener((ListChangeListener.Change<? extends Item> change) -> {
+        playerUIController.getInventoryNotifier().addListener((ListChangeListener.Change<? extends Item> change) -> {
             while (change.next()) {
                 if (change.wasAdded()) {
                     Platform.runLater(() -> homeScreen.getInventoryController().addItems((List<Item>) change.getAddedSubList()));
@@ -50,6 +77,31 @@ public class GameGUI extends Application{
                 }
             }
         });
-        game.play();
+        stage.show();
+        this.game.play();
+    }
+
+    private void saveGame(File playerFile, File mapFile) {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(playerFile))) {
+            out.writeObject(this.game.getPlayer());
+            System.out.println("Object has been serialized to player.ser");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(mapFile))) {
+            out.writeObject(GameMapState.getLocations());
+            System.out.println("Object has been serialized to map.ser");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Player retrieveGame(File playerFile, File mapFile) throws IOException, ClassNotFoundException {
+        ObjectInputStream playerIn = new ObjectInputStream(new FileInputStream(playerFile));
+        ObjectInputStream mapIn = new ObjectInputStream(new FileInputStream(mapFile));
+        Player player = (Player) playerIn.readObject();
+        player.initPlayerUIController();
+        GameMapState.setState((Map<Location, Room>) mapIn.readObject());
+        return player;
     }
 }

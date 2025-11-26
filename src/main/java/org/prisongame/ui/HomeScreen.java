@@ -4,7 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
-import org.prisongame.map.GameMap;
+import org.prisongame.map.Location;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -22,14 +22,14 @@ public class HomeScreen extends Scene {
     private final StatusBarController strengthBar;
 
 
-    public HomeScreen(FXMLLoader fxmlLoader, GameMap startLocation) throws IOException {
+    public HomeScreen(FXMLLoader fxmlLoader) throws IOException {
         super(fxmlLoader.load());
         getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
         homeFXMLController = fxmlLoader.getController();
         this.guiTerminalOutController = new GUITerminalOutController(homeFXMLController.terminalOut);
         this.guiTerminalInController = new GUITerminalInController(homeFXMLController.terminalIn);
         this.mapBounds = homeFXMLController.map.boundsInParentProperty().get();
-        this.avatarController = new AvatarController(homeFXMLController.avatar, startLocation, mapBounds);
+        this.avatarController = new AvatarController(homeFXMLController.avatar, Location.CELL_BLOCK, mapBounds);
         this.energyBar = new StatusBarController(100, homeFXMLController.energyBarLabel, homeFXMLController.energyBar);
         this.intellectBar = new StatusBarController(0, homeFXMLController.intellectBarLabel, homeFXMLController.intellectBar);
         this.strengthBar = new StatusBarController(0, homeFXMLController.strengthBarLabel, homeFXMLController.strengthBar);
@@ -48,7 +48,7 @@ public class HomeScreen extends Scene {
         return guiTerminalOutController;
     }
 
-    public void setAvatarLocation(GameMap location) {
+    public void setAvatarLocation(Location location) {
         avatarController.setLocation(location, mapBounds);
     }
 

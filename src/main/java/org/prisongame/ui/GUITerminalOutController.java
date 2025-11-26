@@ -5,6 +5,7 @@ import javafx.scene.control.TextArea;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 
+import java.io.Serializable;
 import java.util.concurrent.Flow;
 
 public class GUITerminalOutController implements Flow.Subscriber<String>, Output {

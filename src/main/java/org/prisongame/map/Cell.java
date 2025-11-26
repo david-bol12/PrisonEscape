@@ -1,14 +1,17 @@
 package org.prisongame.map;
 
-import org.prisongame.items.Item;
-
-import java.util.ArrayList;
+import org.prisongame.items.Bedsheet;
 
 public class Cell extends Room {
 
+    private static int cellCount = 1;
     int cellNum;
 
-    public Cell(int cellNum, ArrayList<Item> items) {
-        super("Cell-" + cellNum, null, GameMap.Floor.F1, items);
+    public Cell() {
+        super("Cell-" + cellCount, null, Location.Floor.CellBlock);
+        this.cellNum = cellCount;
+        cellCount++;
+        super.addItem(new Bedsheet());
+        addExits(Location.CELL_BLOCK);
     }
 }

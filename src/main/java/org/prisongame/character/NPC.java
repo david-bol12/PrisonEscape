@@ -1,23 +1,23 @@
 package org.prisongame.character;
-
-import org.prisongame.map.GameMap;
+import org.prisongame.map.GameMapState;
+import org.prisongame.map.Location;
 import org.prisongame.items.Item;
 
 import java.util.ArrayList;
 
 public class NPC extends Character {
 
-    public NPC(String name, GameMap location) {
+    public NPC(String name, Location location) {
         super(name, location);
     }
 
-    public NPC(String name, GameMap location, ArrayList<Item> inventory) {
+    public NPC(String name, Location location, ArrayList<Item> inventory) {
         super(name, location, inventory);
     }
 
     @Override
-    public void setLocation(GameMap location) {
+    public void setLocation(Location location) {
         this.location = location;
-        location.getRoom().addNpc(this);
+        GameMapState.getRoom(location);
     }
 }

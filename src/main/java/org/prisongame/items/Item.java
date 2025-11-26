@@ -3,9 +3,10 @@ package org.prisongame.items;
 
 import org.prisongame.map.Room;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Item {
+public class Item implements Serializable {
     private String description;
     private String name;
     private Room location;

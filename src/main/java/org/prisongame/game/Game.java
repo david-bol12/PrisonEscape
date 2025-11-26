@@ -19,25 +19,24 @@ import org.prisongame.character.Player;
 import org.prisongame.commands.Command;
 import org.prisongame.commands.Parser;
 import org.prisongame.items.Cookie;
-import org.prisongame.map.GameMap;
 import org.prisongame.items.Item;
 import org.prisongame.ui.Output;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.concurrent.Flow;
 
-public class Game implements Flow.Subscriber<String> {
+public class Game implements Flow.Subscriber<String>, Serializable {
     private final Parser parser = new Parser();
     private Player player;
     private Output output;
     private Flow.Subscription subscription;
 
-    public Game(Output output) {
+    public Game(Output output, Player player) {
         this.output = output;
         ArrayList<Item> items = new ArrayList<Item>();
         items.add(new Cookie());
-        this.player = new Player("David", GameMap.CELL_BLOCK, items);
-        this.player.setEnergy(50);
+        this.player = player;
     }
 
     public void play() {

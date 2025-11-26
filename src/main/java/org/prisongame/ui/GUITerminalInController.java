@@ -4,6 +4,7 @@ import javafx.scene.control.TextField;
 import org.prisongame.commands.Command;
 import org.prisongame.commands.Parser;
 
+import java.io.Serializable;
 import java.util.concurrent.SubmissionPublisher;
 
 public class GUITerminalInController extends SubmissionPublisher<String> {

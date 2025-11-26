@@ -62,7 +62,7 @@
                     <RowConstraints percentHeight="50" />
                 </rowConstraints>
                 <HBox GridPane.columnIndex="0" GridPane.rowIndex="0" HBox.hgrow="ALWAYS" alignment="CENTER_LEFT" spacing="20">
-                    <Label textFill="white" text="Energy"/>
+                    <Label textFill="white" text="Energy  "/>
                     <ProgressBar fx:id="energyBar" styleClass="statusBar" progress="0.25" maxHeight="20" HBox.hgrow="ALWAYS" maxWidth="${intellectBar.width}" style="-fx-accent: #fff700;"/>
                     <Label fx:id="energyBarLabel" textFill="white" text="20"/>
                 </HBox>
