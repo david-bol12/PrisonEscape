@@ -15,11 +15,11 @@ public class Player extends Character{
 
     private transient PlayerUIController playerUIController;
     final int INVENTORY_SIZE = 10;
-    NPC currentConversation = null;
+    private NPC currentConversation = null;
     int energy = 100;
     int intellect = 0;
     int strength = 0;
-    int money = 0;
+    int money = 20;
 
     public Player(String name, Location location) {
         super(name, location);
@@ -88,6 +88,14 @@ public class Player extends Character{
         playerUIController.setMoneyNotifier(money);
     }
 
+    public boolean spendMoney(int amnt) {
+        if (money >= amnt) {
+            setMoney(money - amnt);
+            return true;
+        }
+        return false;
+    }
+
     public void setStrength(int strength) {
         this.strength = strength;
         playerUIController.setStrengthNotifier(strength);
@@ -112,6 +120,14 @@ public class Player extends Character{
         }
         setEnergy(getEnergy() + amnt);
         return amnt;
+    }
+
+    public boolean useEnergy(int amnt) {
+        if (energy >= amnt) {
+            setEnergy(energy - amnt);
+            return true;
+        }
+        return false;
     }
 
     // Commands

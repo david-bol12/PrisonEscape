@@ -33,7 +33,7 @@ public class GameGUI extends Application{
         try {
             player = retrieveGame(playerFile, mapFile);
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("No Save Found");
             player = new Player("David", Location.CANTEEN);
             GameMapState.createMapState();
         }
@@ -58,13 +58,24 @@ public class GameGUI extends Application{
         playerUIController.getEnergyNotifier().addListener((_, _, newValue) -> {
             Platform.runLater(() -> homeScreen.getEnergyBar().setStatus(newValue));
         });
-        homeScreen.getIntellectBar().setStatus(player.getEnergy());
+        homeScreen.getIntellectBar().setStatus(player.getIntellect());
         playerUIController.getIntellectNotifier().addListener((_, _, newValue) -> {
             Platform.runLater(() -> homeScreen.getIntellectBar().setStatus(newValue));
         });
-        homeScreen.getStrengthBar().setStatus(player.getEnergy());
+        homeScreen.getStrengthBar().setStatus(player.getStrength());
         playerUIController.getStrengthNotifier().addListener((_, _, newValue) -> {
             Platform.runLater(() -> homeScreen.getStrengthBar().setStatus(newValue));
+        });
+        homeScreen.getMoneyLabel().setText(String.valueOf(player.getMoney()));
+        playerUIController.getMoneyNotifier().addListener((_, _, newValue) -> {
+            Platform.runLater(() -> homeScreen.getMoneyLabel().setText(String.valueOf(newValue)));
+        });
+        game.getMaximiseTerminal().addListener((_, _, newValue) -> {
+            if (newValue == true) {
+                Platform.runLater(homeScreen::maximiseTerminal);
+            } else {
+                Platform.runLater(homeScreen::minimiseTerminal);
+            }
         });
         homeScreen.getInventoryController().addItems(player.getInventory());
         playerUIController.getInventoryNotifier().addListener((ListChangeListener.Change<? extends Item> change) -> {
@@ -86,13 +97,13 @@ public class GameGUI extends Application{
             out.writeObject(this.game.getPlayer());
             System.out.println("Object has been serialized to player.ser");
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Save Failed");
         }
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(mapFile))) {
             out.writeObject(GameMapState.getLocations());
             System.out.println("Object has been serialized to map.ser");
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Save Failed");
         }
     }
 

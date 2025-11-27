@@ -33,15 +33,15 @@
         <!-- Row percentages -->
         <rowConstraints>
             <RowConstraints percentHeight="10" />
-            <RowConstraints percentHeight="60" />
-            <RowConstraints percentHeight="30" />
+            <RowConstraints percentHeight="60" fx:id="mapConstraints"/>
+            <RowConstraints percentHeight="30" fx:id="terminalConstraints"/>
         </rowConstraints>
 
         <!-- Left column spans all rows: Inventory -->
         <VBox styleClass="placeholders" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.rowSpan="3">
             <HBox alignment="CENTER">
                 <Label text="Money: $" textFill="white" style="-fx-font-size: 34;"/>
-                <Label text="20" textFill="white" style="-fx-font-size: 34;"/>
+                <Label text="20" textFill="white" style="-fx-font-size: 34;" fx:id="moneyLabel"/>
             </HBox>
             <Label alignment="TOP_CENTER" maxHeight="Infinity" maxWidth="Infinity" text="Inventory" textFill="white" wrapText="true" style="-fx-font-size: 36" fx:id="inventoryLabel1"/>
             <TextArea fx:id="inventoryLabel" editable="false" VBox.vgrow="ALWAYS"  styleClass="inventory" style="-fx-font-size: 34;"/>

@@ -10,9 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ae66e8e0-3778-46b9-97e2-4f8635522868" name="Changes" comment="Added Status Bars&#10;Improved GameMap enums&#10;Fixed go command&#10;Added other commands&#10;Started creating cell class&#10;Created Eatable interface&#10;(I need to commit more regularly)">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/map/GameMapState.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/map/Location.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/ui/PlayerUIController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/minigame/BlackjackGame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/minigame/Minigame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.bin" afterDir="false" />
@@ -20,25 +19,17 @@
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/PrisonGame_main_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/PrisonGame_main_jar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/module-info.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/character/Character.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/character/Character.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/character/NPC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/character/NPC.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/character/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/character/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/commands/CommandWords.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/commands/CommandWords.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/commands/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/commands/Parser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/game/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/items/Bedsheet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/items/Bedsheet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/items/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/items/Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/map/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/map/Cell.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/map/CellBlock.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/map/GameMap.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/map/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/map/Room.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/ui/AvatarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/ui/AvatarController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/ui/GUITerminalInController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/ui/GUITerminalInController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/ui/GUITerminalOutController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/ui/GUITerminalOutController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/ui/GameGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/ui/GameGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/ui/HomeFXMLController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/ui/HomeFXMLController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/ui/HomeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/ui/HomeScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/org/prisongame/ui/home.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/prisongame/ui/home.fxml" afterDir="false" />
     </list>
@@ -238,6 +229,11 @@
       <workItem from="1763998575000" duration="6346000" />
       <workItem from="1764071714362" duration="14885000" />
       <workItem from="1764100406197" duration="15365000" />
+      <workItem from="1764166870462" duration="518000" />
+      <workItem from="1764167688018" duration="3382000" />
+      <workItem from="1764171188044" duration="88000" />
+      <workItem from="1764171710178" duration="18467000" />
+      <workItem from="1764265961861" duration="1741000" />
     </task>
     <task id="LOCAL-00001" summary="Upload">
       <option name="closed" value="true" />

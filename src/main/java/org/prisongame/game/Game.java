@@ -15,11 +15,15 @@ emphasizing exploration and simple command-driven gameplay
 
 package org.prisongame.game;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import org.prisongame.character.Player;
 import org.prisongame.commands.Command;
 import org.prisongame.commands.Parser;
 import org.prisongame.items.Cookie;
 import org.prisongame.items.Item;
+import org.prisongame.minigame.BlackjackGame;
+import org.prisongame.minigame.Minigame;
 import org.prisongame.ui.Output;
 
 import java.io.Serializable;
@@ -31,6 +35,8 @@ public class Game implements Flow.Subscriber<String>, Serializable {
     private Player player;
     private Output output;
     private Flow.Subscription subscription;
+    private Minigame currentMinigame = null;
+    private ObjectProperty<Boolean> maximiseTerminal = new SimpleObjectProperty<Boolean>(false);
 
     public Game(Output output, Player player) {
         this.output = output;
@@ -63,6 +69,12 @@ public class Game implements Flow.Subscriber<String>, Serializable {
         } else {
 
             switch (commandWord) {
+                case "money":
+                    player.setMoney(20);
+                    break;
+                case "test":
+                    setCurrentMinigame(new BlackjackGame(output, player));
+                    break;
                 case "intellect":
                     player.setIntellect(player.getIntellect() + 10);
                     break;
@@ -113,6 +125,16 @@ public class Game implements Flow.Subscriber<String>, Serializable {
         }
     }
 
+    private void setCurrentMinigame(Minigame minigame) {
+        if (minigame == null) {
+            maximiseTerminal.set(false);
+        } else {
+            maximiseTerminal.set(true);
+        }
+
+        this.currentMinigame = minigame;
+    }
+
     private void printHelp() {
         output.println("You are lost. You are alone. You wander around the university.");
         output.print("Your command words are: ");
@@ -121,6 +143,10 @@ public class Game implements Flow.Subscriber<String>, Serializable {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public ObjectProperty<Boolean> getMaximiseTerminal() {
+        return maximiseTerminal;
     }
 
     @Override
@@ -133,7 +159,11 @@ public class Game implements Flow.Subscriber<String>, Serializable {
     public void onNext(String item) {
         output.printCommand(item);
         Command command = parser.parseCommand(item);
-        processCommand(command);
+        if (currentMinigame != null) {
+            setCurrentMinigame(currentMinigame.processCommand(command));
+        } else {
+            processCommand(command);
+        }
         subscription.request(1);
     }
 

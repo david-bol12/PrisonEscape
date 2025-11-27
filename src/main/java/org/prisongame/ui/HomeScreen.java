@@ -3,7 +3,9 @@ package org.prisongame.ui;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.RowConstraints;
 import org.prisongame.map.Location;
 
 import java.io.IOException;
@@ -20,6 +22,9 @@ public class HomeScreen extends Scene {
     private final StatusBarController energyBar;
     private final StatusBarController intellectBar;
     private final StatusBarController strengthBar;
+    private final Label moneyLabel;
+    private final RowConstraints mapConstraints;
+    private final RowConstraints terminalConstraints;
 
 
     public HomeScreen(FXMLLoader fxmlLoader) throws IOException {
@@ -34,6 +39,9 @@ public class HomeScreen extends Scene {
         this.intellectBar = new StatusBarController(0, homeFXMLController.intellectBarLabel, homeFXMLController.intellectBar);
         this.strengthBar = new StatusBarController(0, homeFXMLController.strengthBarLabel, homeFXMLController.strengthBar);
         this.inventoryController = new InventoryController(homeFXMLController.inventoryLabel);
+        this.moneyLabel = homeFXMLController.moneyLabel;
+        this.mapConstraints = homeFXMLController.mapConstraints;
+        this.terminalConstraints = homeFXMLController.terminalConstraints;
         getMap().boundsInParentProperty().addListener(((_, _, newValue) -> {
             mapBounds = newValue;
             avatarController.setLocation(avatarController.getLocation(), mapBounds);
@@ -70,5 +78,19 @@ public class HomeScreen extends Scene {
 
     public StatusBarController getStrengthBar() {
         return strengthBar;
+    }
+
+    public Label getMoneyLabel() {
+        return moneyLabel;
+    }
+
+    public void maximiseTerminal() {
+        terminalConstraints.setPercentHeight(90);
+        mapConstraints.setPercentHeight(0);
+    }
+
+    public void minimiseTerminal() {
+        terminalConstraints.setPercentHeight(30);
+        mapConstraints.setPercentHeight(60);
     }
 }

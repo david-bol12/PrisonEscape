@@ -1,6 +1,8 @@
 package org.prisongame.ui;
 
 import javafx.animation.KeyFrame;
+import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.control.TextArea;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
@@ -21,11 +23,13 @@ public class GUITerminalOutController implements Flow.Subscriber<String>, Output
     }
 
     public void println(String text) {
-        terminalOut.appendText(text + "\n");
+        Platform.runLater(() -> terminalOut.appendText(text + "\n"));
     }
 
     public void printCommand(String command) {
-        terminalOut.appendText("> " + command + "\n");
+        Platform.runLater(() -> {
+            terminalOut.appendText("> " + command + "\n");
+        });
     }
 
     public void clear() {

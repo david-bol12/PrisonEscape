@@ -18,6 +18,8 @@ public class CommandWords {
         validCommands.put("drop", "Places item in room");
         validCommands.put("inventory", "Checks inventory");
         validCommands.put("intellect", "make smart");
+        validCommands.put("test", "to test features");
+        validCommands.put("h", "hit in blackjack");
     }
 
     public boolean isCommand(String commandWord) {
