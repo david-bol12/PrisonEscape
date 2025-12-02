@@ -1,17 +1,13 @@
 package org.prisongame.ui;
 
 import javafx.scene.control.TextField;
-import org.prisongame.commands.Command;
-import org.prisongame.commands.Parser;
 
-import java.io.Serializable;
 import java.util.concurrent.SubmissionPublisher;
 
-public class GUITerminalInController extends SubmissionPublisher<String> {
+public class GUITerminalInController extends SubmissionPublisher<String> implements Input{
 
     TextField terminalIn;
     String hintText;
-    Parser parser = new Parser();
 
     public GUITerminalInController(TextField terminalIn) {
         this.terminalIn = terminalIn;
@@ -29,11 +25,16 @@ public class GUITerminalInController extends SubmissionPublisher<String> {
         this.hintText = hintText;
     }
 
+    @Override
     public void setDisable(boolean disable) {
         terminalIn.setDisable(disable);
     }
 
-    public boolean getDisable() {
-        return terminalIn.isDisable();
+    @Override
+    public void disablePeriod(int timeMillis) throws InterruptedException {
+        setDisable(true);
+        Thread.sleep(timeMillis);
+        setDisable(false);
     }
+
 }

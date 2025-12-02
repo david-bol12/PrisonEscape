@@ -1,7 +1,9 @@
 package org.prisongame.minigame;
 import org.prisongame.character.Player;
 import org.prisongame.commands.Command;
+import org.prisongame.ui.Input;
 import org.prisongame.ui.Output;
+import org.prisongame.ui.SoundController;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -90,11 +92,12 @@ class Deck {
 public class BlackjackGame extends Minigame {
 
     @Override
-    public Minigame processCommand(Command command) {
+    public Minigame processCommand(Command command) throws InterruptedException {
 
         if (state == GameState.BET) {
             int bet;
             if (command.getCommandWord().equalsIgnoreCase("quit")) {
+                SoundController.stopPlayer();
                 return null;
             }
             try {
@@ -120,12 +123,14 @@ public class BlackjackGame extends Minigame {
             // Game is over: handle the payout and transition out of the minigame
             if (state == GameState.QUERY) {
                 if (command.getCommandWord().equalsIgnoreCase("y")) {
-                    return new BlackjackGame(output, player);
+                    return new BlackjackGame(output, input, player);
                 }
                 output.println("OK Goodbye!");
+                SoundController.stopPlayer();
                 return null;
             }
-            output.println("You won: " + result.amountWon);
+
+            output.println((result.amountWon < 0 ? "You Lose: " : "You Win: ") + "$" + Math.abs(result.amountWon));
             player.setMoney(player.getMoney() + result.amountWon);
             output.println("Play again?");
 
@@ -158,16 +163,21 @@ public class BlackjackGame extends Minigame {
     private GameState state;
     private int currentBet;
     private GameResult result;
+    private final int DELAY_TIME = 1500;
 
-    public BlackjackGame(Output output, Player player) {
-        super(output, player);
+    public BlackjackGame(Output output, Input input, Player player) {
+        super(output, input, player);
         deck = new Deck();
         playerHand = new ArrayList<>();
         dealerHand = new ArrayList<>();
         this.state = GameState.BET;
         this.currentBet = 0;
         this.result = null;
-        output.println("Please enter a bet");
+        output.println("Please enter a bet or enter 'quit' ");
+        if (!SoundController.getIsPlaying()) {
+            SoundController.playMusic(SoundController.Sound.BLACKJACK_MUSIC);
+            SoundController.playSFX(SoundController.Sound.BLACKJACK_START);
+        }
     }
 
     /**
@@ -199,12 +209,13 @@ public class BlackjackGame extends Minigame {
     /**
      * Prints the player's hand and score using output.println().
      */
-    public void displayPlayerHand() {
+    public void displayPlayerHand() throws InterruptedException {
         output.println("\n--- Your Hand ---");
         for (Card card : playerHand) {
             output.println("  - " + card);
         }
         output.println("Total Value: " + calculateHandValue(playerHand));
+        input.disablePeriod(DELAY_TIME);
     }
 
     /**
@@ -212,7 +223,7 @@ public class BlackjackGame extends Minigame {
      *
      * @param initialDeal If true, hides the second card (hole card).
      */
-    public void displayDealerHand(boolean initialDeal) {
+    public void displayDealerHand(boolean initialDeal) throws InterruptedException {
         output.println("\n--- Dealer's Hand ---");
 
         // Always show the first card (up card)
@@ -227,6 +238,7 @@ public class BlackjackGame extends Minigame {
             }
             output.println("Total Value: " + calculateHandValue(dealerHand));
         }
+        input.disablePeriod(DELAY_TIME);
     }
 
     /**
@@ -237,7 +249,7 @@ public class BlackjackGame extends Minigame {
      * @return null if the game continues (PLAYER_TURN), or the final GameResult
      * if an immediate Blackjack ends the game.
      */
-    public GameResult startGame(int bet) {
+    public GameResult startGame(int bet) throws InterruptedException {
         if (bet <= 0) {
             output.println("Error: Bet must be a positive amount.");
             return new GameResult("ERROR", 0);
@@ -254,8 +266,8 @@ public class BlackjackGame extends Minigame {
         playerHand.add(deck.dealCard());
         dealerHand.add(deck.dealCard());
 
-        output.println("--- Welcome to Blackjack! ---");
         output.println("Bet placed: " + currentBet);
+        input.disablePeriod(DELAY_TIME);
 
         state = GameState.PLAYER_TURN;
 
@@ -285,13 +297,11 @@ public class BlackjackGame extends Minigame {
      * @param choice "H" for Hit, "S" for Stand.
      * @return The final GameResult if the game is over, or null if the game continues.
      */
-    public GameResult processPlayerMove(String choice) { // Method name updated to processPlayerMove
+    public GameResult processPlayerMove(String choice) throws InterruptedException { // Method name updated to processPlayerMove
         if (state != GameState.PLAYER_TURN) {
             output.println("Error: Game is not currently in the player's turn phase.");
             return null;
         }
-        System.out.println(choice);
-        System.out.println(choice.equalsIgnoreCase("H"));
         if (choice.equalsIgnoreCase("H")) {
             // Player Hits
             Card newCard = deck.dealCard();
@@ -303,7 +313,8 @@ public class BlackjackGame extends Minigame {
             if (calculateHandValue(playerHand) > 21) {
                 // Player Busts - Game over
                 this.state = GameState.GAME_OVER;
-                output.println("Bust! Your score is " + calculateHandValue(playerHand) + ".");
+                input.disablePeriod(1000);
+                output.println("\nBust! Your score is " + calculateHandValue(playerHand) + ".");
                 return determineWinnerResult();
             }
             // Player continues
@@ -326,7 +337,7 @@ public class BlackjackGame extends Minigame {
      *
      * @return The final GameResult.
      */
-    public GameResult processDealerTurn() {
+    public GameResult processDealerTurn() throws InterruptedException {
         if (state != GameState.DEALER_TURN) {
             output.println("\nError: Cannot process dealer turn in the current state.");
             return new GameResult("ERROR", 0);
@@ -357,6 +368,7 @@ public class BlackjackGame extends Minigame {
 
         // Game ends after dealer turn
         this.state = GameState.GAME_OVER;
+        input.disablePeriod(DELAY_TIME);
         return determineWinnerResult();
     }
 
@@ -380,8 +392,7 @@ public class BlackjackGame extends Minigame {
                 // Both Blackjack (Push)
                 return new GameResult("PUSH", 0);
             } else {
-                // Player Blackjack (Pays 3:2)
-                int payout = (int) Math.floor(currentBet * 2);
+                int payout =  (currentBet * 2);
                 return new GameResult("PLAYER_BLACKJACK", payout);
             }
         }
@@ -407,7 +418,8 @@ public class BlackjackGame extends Minigame {
      *
      * @return The final GameResult.
      */
-    private GameResult determineWinnerResult() {
+    private GameResult determineWinnerResult() throws InterruptedException {
+        input.disablePeriod(DELAY_TIME);
         GameResult result = determineWinnerStatus();
 
         output.println("\n======== FINAL RESULTS ========");
@@ -418,21 +430,27 @@ public class BlackjackGame extends Minigame {
 
         switch (result.status) {
             case "PLAYER_BLACKJACK":
-                resultMessage = "BLACKJACK! You win " + result.amountWon + "!";
+                SoundController.playSFX(SoundController.Sound.BLACKJACK_WIN);
+                resultMessage = "BLACKJACK! You Win !";
                 break;
             case "DEALER_BLACKJACK":
-                resultMessage = "Dealer has Blackjack! You lose " + currentBet + ".";
+                SoundController.playSFX(SoundController.Sound.BLACKJACK_LOSE);
+                resultMessage = "Dealer has Blackjack! You Lose";
                 break;
             case "BUST":
-                resultMessage = "You busted! You lose " + currentBet + ".";
+                SoundController.playSFX(SoundController.Sound.BLACKJACK_LOSE);
+                resultMessage = "You busted! You Lose";
                 break;
             case "WIN":
-                resultMessage = "You win " + result.amountWon + "!";
+                SoundController.playSFX(SoundController.Sound.BLACKJACK_WIN);
+                resultMessage = "You Win!";
                 break;
             case "LOSS":
-                resultMessage = "You lose " + currentBet + ".";
+                SoundController.playSFX(SoundController.Sound.BLACKJACK_LOSE);
+                resultMessage = "You Lose";
                 break;
             case "PUSH":
+                SoundController.playSFX(SoundController.Sound.BLACKJACK_DRAW);
                 resultMessage = "It's a push (tie). Your bet is returned.";
                 break;
             default:
@@ -441,6 +459,7 @@ public class BlackjackGame extends Minigame {
 
         output.println(resultMessage);
         output.println("===============================");
+        input.disablePeriod(DELAY_TIME);
 
         return result;
     }

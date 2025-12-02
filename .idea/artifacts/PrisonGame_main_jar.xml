@@ -16,6 +16,7 @@
       <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-base/21.0.6/1abc0ceb22d0434806a9501eff9e63ec0cfda25c/javafx-base-21.0.6-win.jar" path-in-jar="/" />
       <element id="dir-copy" path="$PROJECT_DIR$/src/main/resources" />
       <element id="dir-copy" path="$PROJECT_DIR$/saves" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-media/21.0.6/30057dfe64f6403777c2e24ef3d7f2b6b25d52dd/javafx-media-21.0.6-win.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

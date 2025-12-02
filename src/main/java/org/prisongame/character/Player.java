@@ -41,6 +41,7 @@ public class Player extends Character{
     public void setLocation(Location location) {
         this.location = location;
         playerUIController.setLocationNotifier(this.location);
+
     }
 
     public Room getCurrentRoom() {
@@ -130,6 +131,30 @@ public class Player extends Character{
         return false;
     }
 
+    public int addIntellect(int amnt) {
+        if (intellect == 100) {
+            return 0;
+        }
+        if (intellect + amnt < 100) {
+            setIntellect(intellect + amnt);
+            return amnt;
+        }
+        setIntellect(100);
+        return 100 - intellect;
+    }
+
+    public int addStrength(int amnt) {
+        if (strength == 100) {
+            return 0;
+        }
+        if (strength + amnt < 100) {
+            setStrength(strength + amnt);
+            return amnt;
+        }
+        setStrength(100);
+        return 100 - strength;
+    }
+
     // Commands
 
     public String pickUpItem(Item item) {
@@ -141,10 +166,14 @@ public class Player extends Character{
         return "My inventory is full!";
     }
 
-    public String dropItem(Item item) {
-        getCurrentRoom().addItem(item);
-        removeFromInvetory(item);
-        return "Placed " + item.getName() + "!";
+    public String dropItem(String itemName) {
+        Item dropItem = Item.checkItemAvailable(itemName, getInventory());
+        if (dropItem == null) {
+            return "I don't have that item!";
+        }
+        getCurrentRoom().addItem(dropItem);
+        removeFromInvetory(dropItem);
+        return "Placed " + dropItem.getName() + "!";
     }
 
     public String go(String locName) {
@@ -155,15 +184,18 @@ public class Player extends Character{
             if (Objects.equals(locName, GameMapState.getRoom(loc).getName().toLowerCase())) {
                 if (getCurrentRoom().getExits().contains(loc) && !GameMapState.getRoom(loc).isLocked()) {
                     setLocation(loc);
-                    if (GameMapState.getRoom(loc).getDescription() != null) {
+                    if (GameMapState.getRoom(loc).getOnEnterMessage() != null) {
                         return String.format(
                                 "Entered: %s \n" +
                                         "%s",
                                 GameMapState.getRoom(loc).getName(),
-                                GameMapState.getRoom(loc).getDescription()
+                                GameMapState.getRoom(loc).getOnEnterMessage()
                         );
                     }
                     return "Entered: " + GameMapState.getRoom(loc).getName();
+                }
+                if (GameMapState.getRoom(loc).isLocked()) {
+                    return "This door is locked! I think i'll need a keycard to get in...";
                 }
             }
         }
@@ -192,5 +224,29 @@ public class Player extends Character{
             }
         }
         return "I can't eat that!";
+    }
+
+    public String study() {
+        if (location == Location.LIBRARY) {
+            if (useEnergy(20)) {
+                addIntellect(5);
+                return "Gained 5 Intellect!";
+            }
+            return "I'm too tired to do that \n" +
+                    "Maybe some food could help...";
+        }
+        return "I can't do that here!";
+    }
+
+    public String exercise() {
+        if (location == Location.GYM) {
+            if (useEnergy(20)) {
+                addStrength(5);
+                return "Gained 5 Strength!";
+            }
+            return "I'm too tired to do that \n" +
+                    "Maybe some food could help...";
+        }
+        return "I can't do that here!";
     }
 }

@@ -27,12 +27,12 @@ tasks.withType<JavaCompile> {
 
 application {
     mainModule.set("org.prisongame.ui")
-    mainClass.set("org.prisongame.ui.HelloApplication")
+    mainClass.set("org.prisongame.ui.Main")
 }
 
 javafx {
     version = "21.0.6"
-    modules = listOf("javafx.controls", "javafx.fxml")
+    modules = listOf("javafx.controls", "javafx.fxml", "javafx.media")
 }
 
 dependencies {

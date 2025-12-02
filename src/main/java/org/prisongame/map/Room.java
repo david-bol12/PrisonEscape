@@ -14,7 +14,8 @@ public class Room implements Serializable {
             ""
     };
 
-    private String description; // Map direction to neighboring Room
+    private String roomDescription = null;
+    private String onEnterMessage;
     private ArrayList<Item> items = new ArrayList<Item>();
     private ArrayList<NPC> npcs;
     private String name;
@@ -23,32 +24,25 @@ public class Room implements Serializable {
     private ArrayList<String> validCommands;
     private ArrayList<Location> exits = new ArrayList<Location>();
 
-    public Room(String name, String description, Location.Floor floor, ArrayList<String> validCommands) {
-        this.name = name;
-        this.description = description;
-        this.floor = floor;
-        this.validCommands = validCommands;
-        this.npcs = new ArrayList<NPC>();
-    }
-
-    public Room(String name, String description, ArrayList<NPC> npcs, Location.Floor floor, ArrayList<String> validCommands) {
-        this.name = name;
-        this.description = description;
-        this.npcs = npcs;
-        this.floor = floor;
-        this.validCommands = validCommands;
-    }
-
-    public Room(String name, String description, Location.Floor floor) {
+    public Room(String name, String onEnterMessage, Location.Floor floor) {
         this.name = name;
         this.floor = floor;
         this.validCommands = new ArrayList<String>(List.of(STANDARD_COMMANDS));
-        this.description = description;
+        this.onEnterMessage = onEnterMessage;
         this.items = new ArrayList<Item>();
     }
 
-    public String getDescription() {
-        return description;
+    public Room(String name, String onEnterMessage, Location.Floor floor, boolean locked) {
+        this.name = name;
+        this.floor = floor;
+        this.validCommands = new ArrayList<String>(List.of(STANDARD_COMMANDS));
+        this.onEnterMessage = onEnterMessage;
+        this.items = new ArrayList<Item>();
+        this.locked = locked;
+    }
+
+    public String getOnEnterMessage() {
+        return this.onEnterMessage;
     }
 
     public String searchRoom() {
@@ -77,10 +71,6 @@ public class Room implements Serializable {
 
     public void addItem(Item item) {
         items.add(item);
-    }
-
-    public String getLongDescription() {
-        return "You are " + description;
     }
 
     public ArrayList<Item> getItems() {

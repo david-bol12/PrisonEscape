@@ -1,7 +1,5 @@
 package org.prisongame.map;
 
-import java.util.ArrayList;
-
 public enum Location {
     //Floor 1
     CELL_BLOCK,
@@ -12,12 +10,19 @@ public enum Location {
         CELL4,
         CELL5,
 
-    HALLWAY,
+    HALLWAY_F1,
     GUARDS_QUARTERS,
-    STAIRS,
+    STAIRS_F1,
     YARD,
     SHOWERS,
-    CANTEEN;
+    CANTEEN,
+
+    HALLWAY_F2,
+    STAIRS_F2,
+    GYM,
+    COMMON_AREA,
+    LIBRARY,
+    GUARD_LOOKOUT_PLATFORM;
 
     public enum Floor {
         F1,

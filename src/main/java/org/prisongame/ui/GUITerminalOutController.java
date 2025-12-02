@@ -19,16 +19,23 @@ public class GUITerminalOutController implements Flow.Subscriber<String>, Output
     }
 
     public void print(String text) {
-        terminalOut.appendText(text);
+        Platform.runLater(() -> {
+            terminalOut.appendText(text);
+            terminalOut.positionCaret(terminalOut.getLength());
+        });
     }
 
     public void println(String text) {
-        Platform.runLater(() -> terminalOut.appendText(text + "\n"));
+        Platform.runLater(() -> {
+            terminalOut.appendText(text + "\n");
+            terminalOut.positionCaret(terminalOut.getLength());
+        });
     }
 
     public void printCommand(String command) {
         Platform.runLater(() -> {
             terminalOut.appendText("> " + command + "\n");
+            terminalOut.positionCaret(terminalOut.getLength());
         });
     }
 

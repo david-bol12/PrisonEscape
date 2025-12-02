@@ -4,8 +4,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.RowConstraints;
+import org.prisongame.map.GameMapState;
 import org.prisongame.map.Location;
 
 import java.io.IOException;
@@ -17,6 +19,7 @@ public class HomeScreen extends Scene {
     private final GUITerminalOutController guiTerminalOutController;
     private final GUITerminalInController guiTerminalInController;
     private final AvatarController avatarController;
+    private final ImageView mapImageView;
     private Bounds mapBounds;
     private final InventoryController inventoryController;
     private final StatusBarController energyBar;
@@ -25,6 +28,15 @@ public class HomeScreen extends Scene {
     private final Label moneyLabel;
     private final RowConstraints mapConstraints;
     private final RowConstraints terminalConstraints;
+    private final Image mapF1Image = new Image(
+            Objects.requireNonNull(getClass().getResource("/org/prisongame/ui/PrisonF1Map.png")).toExternalForm()
+    );
+    private final Image mapF2LockedImage = new Image(
+            Objects.requireNonNull(getClass().getResource("/org/prisongame/ui/PrisonF2MapLocked.png")).toExternalForm()
+    );
+    private final Image mapF2Image = new Image(
+            Objects.requireNonNull(getClass().getResource("/org/prisongame/ui/PrisonF2Map.png")).toExternalForm()
+    );
 
 
     public HomeScreen(FXMLLoader fxmlLoader) throws IOException {
@@ -42,6 +54,7 @@ public class HomeScreen extends Scene {
         this.moneyLabel = homeFXMLController.moneyLabel;
         this.mapConstraints = homeFXMLController.mapConstraints;
         this.terminalConstraints = homeFXMLController.terminalConstraints;
+        this.mapImageView = homeFXMLController.map;
         getMap().boundsInParentProperty().addListener(((_, _, newValue) -> {
             mapBounds = newValue;
             avatarController.setLocation(avatarController.getLocation(), mapBounds);
@@ -92,5 +105,17 @@ public class HomeScreen extends Scene {
     public void minimiseTerminal() {
         terminalConstraints.setPercentHeight(30);
         mapConstraints.setPercentHeight(60);
+    }
+
+    public void setMapImage(Location.Floor floor) {
+        if (floor == Location.Floor.F2) {
+            if (!GameMapState.getRoom(Location.GUARD_LOOKOUT_PLATFORM).isLocked()) {
+                mapImageView.setImage(mapF2Image);
+            } else {
+                mapImageView.setImage(mapF2LockedImage);
+            }
+        } else {
+            mapImageView.setImage(mapF1Image);
+        }
     }
 }

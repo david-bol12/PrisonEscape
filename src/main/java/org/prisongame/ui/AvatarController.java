@@ -16,10 +16,14 @@ public class AvatarController {
             Location.SHOWERS, new Point2D.Double(0.355, 0.86),
             Location.CELL_BLOCK, new Point2D.Double(0.112, 0.55),
             Location.GUARDS_QUARTERS, new Point2D.Double(0.375, 0.26),
-            Location.HALLWAY, new Point2D.Double(0.495, 0.53),
-            Location.STAIRS, new Point2D.Double(0.7, 0.28),
+            Location.HALLWAY_F1, new Point2D.Double(0.495, 0.53),
+            Location.STAIRS_F1, new Point2D.Double(0.7, 0.28),
             Location.CANTEEN, new Point2D.Double(0.615, 0.86),
-            Location.YARD, new Point2D.Double(0.875, 0.55)
+            Location.YARD, new Point2D.Double(0.875, 0.55),
+
+            Location.STAIRS_F2, new Point2D.Double(0.7, 0.28),
+            Location.HALLWAY_F2,  new Point2D.Double(0.495, 0.53),
+            Location.LIBRARY, new Point2D.Double(0.615, 0.86)
     ));
 
     private final ImageView avatar;
@@ -30,6 +34,9 @@ public class AvatarController {
         for (Location cell : GameMapState.getCells()) {
             locationPoints.put(cell, new Point2D.Double(0.112, 0.55));
         }
+        locationPoints.put(Location.GYM, new Point2D.Double(0.375, 0.235));
+        locationPoints.put(Location.COMMON_AREA, new Point2D.Double(0.355, 0.885));
+        locationPoints.put(Location.GUARD_LOOKOUT_PLATFORM, new Point2D.Double(0.112, 0.575));
         this.avatar = avatar;
         setLocation(location, mapBounds);
     }

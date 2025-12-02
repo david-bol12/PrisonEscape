@@ -85,7 +85,7 @@
                 <Pane HBox.hgrow="ALWAYS" minWidth="0" style="-fx-background-color: black;">
                     <ImageView fitWidth="${mapPane.width}" fitHeight="${mapPane.height}" preserveRatio="true" smooth="false" fx:id="map">
                         <image>
-                            <Image url="@PrisonF1Map.png" />
+                            <Image url="@PrisonF1Map.png"/>
                         </image>
                     </ImageView>
                     <ImageView preserveRatio="true" fitHeight="${mapPane.height * 0.07}"  fitWidth="${mapPane.width * 0.0225}" fx:id="avatar">
