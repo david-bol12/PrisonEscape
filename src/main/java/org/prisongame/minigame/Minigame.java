@@ -1,11 +1,12 @@
 package org.prisongame.minigame;
 
 import org.prisongame.character.Player;
+import org.prisongame.character.Processer;
 import org.prisongame.commands.Command;
 import org.prisongame.ui.Input;
 import org.prisongame.ui.Output;
 
-public abstract class Minigame {
+public abstract class Minigame implements Processer {
 
     protected Output output;
     protected Input input;
@@ -17,5 +18,6 @@ public abstract class Minigame {
         this.input = input;
     }
 
-    public abstract Minigame processCommand(Command command) throws InterruptedException;
+    @Override
+    public abstract Processer processCommand(Command command) throws InterruptedException;
 }

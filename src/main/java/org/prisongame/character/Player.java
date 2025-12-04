@@ -1,7 +1,7 @@
 package org.prisongame.character;
 
-import org.prisongame.items.Cookie;
-import org.prisongame.items.Eatable;
+import org.prisongame.game.Game;
+import org.prisongame.items.Food;
 import org.prisongame.map.GameMapState;
 import org.prisongame.map.Location;
 import org.prisongame.items.Item;
@@ -15,7 +15,7 @@ public class Player extends Character{
 
     private transient PlayerUIController playerUIController;
     final int INVENTORY_SIZE = 10;
-    private NPC currentConversation = null;
+    private Processer currentConversation = null;
     int energy = 100;
     int intellect = 0;
     int strength = 0;
@@ -23,8 +23,7 @@ public class Player extends Character{
 
     public Player(String name, Location location) {
         super(name, location);
-        playerUIController = new PlayerUIController(location, inventory, energy, intellect, strength, money);
-        addToInventory(new Cookie());
+        playerUIController = new PlayerUIController(location, getInventoryList(), energy, intellect, strength, money);
     }
 
     public Player(String name, Location location, ArrayList<Item> inventory) {
@@ -49,12 +48,13 @@ public class Player extends Character{
     }
 
     public void addToInventory(Item item) {
-        inventory.add(item);
+        getInventoryList().add(item);
         playerUIController.getInventoryNotifier().add(item);
     }
 
-    public void removeFromInvetory(Item item) {
-        inventory.remove(item);
+    @Override
+    public void removeFromInventory(Item item) {
+        super.removeFromInventory(item);
         playerUIController.getInventoryNotifier().remove(item);
     }
 
@@ -107,7 +107,7 @@ public class Player extends Character{
     }
 
     public void initPlayerUIController () {
-        playerUIController = new PlayerUIController(location, inventory, energy, intellect, strength, money);
+        playerUIController = new PlayerUIController(location, getInventoryList(), energy, intellect, strength, money);
     }
 
     public int addEnergy(int amnt) {
@@ -158,7 +158,7 @@ public class Player extends Character{
     // Commands
 
     public String pickUpItem(Item item) {
-        if (inventory.size() < INVENTORY_SIZE) {
+        if (getInventoryList().size() < INVENTORY_SIZE) {
             getCurrentRoom().removeItem(item);
             addToInventory(item);
             return "Picked up " + item.getName() + "!";
@@ -167,12 +167,12 @@ public class Player extends Character{
     }
 
     public String dropItem(String itemName) {
-        Item dropItem = Item.checkItemAvailable(itemName, getInventory());
+        Item dropItem = getInventory().checkObjectAvailable(itemName);
         if (dropItem == null) {
             return "I don't have that item!";
         }
         getCurrentRoom().addItem(dropItem);
-        removeFromInvetory(dropItem);
+        removeFromInventory(dropItem);
         return "Placed " + dropItem.getName() + "!";
     }
 
@@ -206,14 +206,14 @@ public class Player extends Character{
         if (itemName == null) {
             return "Eat what?";
         }
-        Item item = Item.checkItemAvailable(itemName, getInventory());
+        Item item = getInventory().checkObjectAvailable(itemName);
         if (item != null) {
-            if (item instanceof Eatable) {
-                int energyInc = addEnergy(((Eatable) item).eat());
+            if (item instanceof Food) {
+                int energyInc = addEnergy(((Food) item).eat());
                 if (energyInc == 0) {
                     return "Already at max energy";
                 } else {
-                    removeFromInvetory(item);
+                    removeFromInventory(item);
                     return String.format(
                             "Ate %s! \n" +
                             "Gained %d energy",
@@ -248,5 +248,16 @@ public class Player extends Character{
                     "Maybe some food could help...";
         }
         return "I can't do that here!";
+    }
+
+    public void talk(String npcName) throws InterruptedException {
+        if (npcName == null) Game.getOutput().println("That person isn't here right now!");
+        NPC npc = getCurrentRoom().getNpcs().checkObjectAvailable(npcName);
+        if (npc == null) {
+            Game.getOutput().println("That person isn't here right now!");
+        } else {
+            npc.talk();
+        }
+
     }
 }

@@ -6,7 +6,7 @@ public class Command {
 
     public Command(String firstWord, String secondWord) {
         this.commandWord = firstWord;
-        this.secondWord = secondWord;
+        this.secondWord = secondWord == null ? null : secondWord.toLowerCase();
     }
 
     public String getCommandWord() {

@@ -123,7 +123,7 @@ public class GameGUI extends Application{
                 Platform.runLater(homeScreen::minimiseTerminal);
             }
         });
-        homeScreen.getInventoryController().addItems(player.getInventory());
+        homeScreen.getInventoryController().addItems(player.getInventoryList());
         playerUIController.getInventoryNotifier().addListener((ListChangeListener.Change<? extends Item> change) -> {
             while (change.next()) {
                 if (change.wasAdded()) {

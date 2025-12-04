@@ -2,25 +2,26 @@ package org.prisongame.character;
 
 import org.prisongame.map.Location;
 import org.prisongame.items.Item;
+import org.prisongame.utils.Container;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Character implements Serializable {
     protected String name;
-    protected ArrayList<Item> inventory;
+    private Container<Item> inventory = new Container<>();
     protected Location location;
 
     public Character(String name, Location location) {
         this.name = name;
         this.location = location;
-        this.inventory = new ArrayList<Item>();
     }
 
-    public Character(String name, Location location, ArrayList<Item> inventory) {
+    public Character(String name, Location location, List<Item> inventory) {
         this.name = name;
         this.location = location;
-        this.inventory = inventory;
+        this.inventory = new Container<>(inventory);
     }
 
     public String getName() {
@@ -33,7 +34,15 @@ public abstract class Character implements Serializable {
 
     public abstract void setLocation(Location location);
 
-    public ArrayList<Item> getInventory() {
+    public ArrayList<Item> getInventoryList() {
+        return inventory.getObjects();
+    }
+
+    public Container<Item> getInventory() {
         return inventory;
+    }
+
+    public void removeFromInventory(Item item) {
+        getInventoryList().remove(item);
     }
 }

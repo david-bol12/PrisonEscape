@@ -9,18 +9,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ae66e8e0-3778-46b9-97e2-4f8635522868" name="Changes" comment="Added Minigame abstract class and blackjack">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/ui/Input.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/ui/SoundController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/prisongame/ui/BlackjackClap.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/prisongame/ui/BlackjackDraw.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/prisongame/ui/BlackjackLose.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/prisongame/ui/BlackjackStart.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/prisongame/ui/BlackjackWin.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/prisongame/ui/Luigi'sCasino.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/prisongame/ui/PrisonF2MapLocked.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.14/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.14/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/sha1-checksums.bin" afterDir="false" />
+    <list default="true" id="ae66e8e0-3778-46b9-97e2-4f8635522868" name="Changes" comment="Added commandHelp&#10;Added sound">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/character/BlackjackNPC.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/character/Dialog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/character/Processer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/character/ShopNPC.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/items/Food.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/utils/Container.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/utils/ContainerObject.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.bin" afterDir="false" />
@@ -28,34 +24,26 @@
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/PrisonGame_main_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/PrisonGame_main_jar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/module-info.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/org/prisongame/ui/20250328_115506.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/character/Character.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/character/Character.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/character/NPC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/character/NPC.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/character/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/character/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/commands/CommandWords.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/commands/CommandHelp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/commands/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/commands/Command.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/commands/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/commands/Parser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/game/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/items/Cookie.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/items/Eatable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/items/Usable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/items/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/items/Item.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/map/GameMapState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/map/GameMapState.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/map/Location.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/map/Location.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/map/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/map/Room.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/minigame/BlackjackGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/minigame/BlackjackGame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/minigame/Minigame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/minigame/Minigame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/ui/AvatarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/ui/AvatarController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/ui/GUITerminalInController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/ui/GUITerminalInController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/ui/GUITerminalOutController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/ui/GUITerminalOutController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/ui/GameGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/ui/GameGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/ui/HomeFXMLController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/ui/HomeFXMLController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/ui/HomeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/ui/HomeScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/prisongame/ui/20250328_115506.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/prisongame/ui/AvatarIcon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/prisongame/ui/PrisonF1Map.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/prisongame/ui/PrisonGameMap-Page-1.drawio.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/prisongame/ui/PrisonGameMap.drawio.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/prisongame/ui/SoundController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/prisongame/ui/SoundController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/org/prisongame/ui/home.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/prisongame/ui/home.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -120,8 +108,10 @@
       <list>
         <option value="CSS File" />
         <option value="Enum" />
-        <option value="Interface" />
+        <option value="AnnotationType" />
+        <option value="Record" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -158,45 +148,46 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Launcher.executor&quot;: &quot;Run&quot;,
-    &quot;Application.UI.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Build PrisonGame.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.PrisonGame [:org.prisongame.game.Game.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.PrisonGame [:org.prisongame.game.Main.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.PrisonGame [:org.prisongame.prisongame.Launcher.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.PrisonGame [:org.prisongame.terminal.ZorkULGame.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.PrisonGame [:org.prisongame.ui.GameGUI.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.PrisonGame [:org.prisongame.ui.HelloApplication.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.PrisonGame [:org.prisongame.ui.Launcher.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.PrisonGame [:org.prisongame.ui.Main.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.PrisonGame [:org.prisongame.ui.gui.GameGUI.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.PrisonGame [jar].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.PrisonGame [run].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Upgrade Gradle wrapper.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/david/Desktop/Code/Java/PrisonGame/src/main/resources&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editing.templates&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Launcher.executor": "Run",
+    "Application.UI.executor": "Run",
+    "Gradle.Build PrisonGame.executor": "Run",
+    "Gradle.Download Sources.executor": "Run",
+    "Gradle.PrisonGame [:org.prisongame.game.Game.main()].executor": "Run",
+    "Gradle.PrisonGame [:org.prisongame.game.Main.main()].executor": "Run",
+    "Gradle.PrisonGame [:org.prisongame.prisongame.Launcher.main()].executor": "Run",
+    "Gradle.PrisonGame [:org.prisongame.terminal.ZorkULGame.main()].executor": "Run",
+    "Gradle.PrisonGame [:org.prisongame.ui.GameGUI.main()].executor": "Run",
+    "Gradle.PrisonGame [:org.prisongame.ui.HelloApplication.main()].executor": "Run",
+    "Gradle.PrisonGame [:org.prisongame.ui.Launcher.main()].executor": "Run",
+    "Gradle.PrisonGame [:org.prisongame.ui.Main.main()].executor": "Run",
+    "Gradle.PrisonGame [:org.prisongame.ui.gui.GameGUI.main()].executor": "Run",
+    "Gradle.PrisonGame [jar].executor": "Run",
+    "Gradle.PrisonGame [run].executor": "Run",
+    "Gradle.Upgrade Gradle wrapper.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/david/Desktop/Code/Java/PrisonGame/src/main/resources",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "editing.templates",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\david\Desktop\Code\Java\PrisonGame\src\main\resources" />
@@ -213,7 +204,7 @@
       <recent name="org.prisongame.ui" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.PrisonGame [run]">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.prisongame.ui.Main" />
       <module name="PrisonGame.main" />
@@ -339,6 +330,9 @@
       <workItem from="1764597775475" duration="1333000" />
       <workItem from="1764600057803" duration="3017000" />
       <workItem from="1764609428514" duration="2805000" />
+      <workItem from="1764695483236" duration="20651000" />
+      <workItem from="1764771013310" duration="24201000" />
+      <workItem from="1764859304350" duration="9451000" />
     </task>
     <task id="LOCAL-00001" summary="Upload">
       <option name="closed" value="true" />
@@ -445,9 +439,28 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/prisongame/ui/Main.java</url>
-          <line>6</line>
-          <option name="timeStamp" value="1" />
+          <url>file://$PROJECT_DIR$/src/main/java/org/prisongame/game/Game.java</url>
+          <line>185</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/prisongame/game/Game.java</url>
+          <line>186</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/prisongame/game/Game.java</url>
+          <line>187</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/org/prisongame/game/Game.java</url>
+          <line>184</line>
+          <properties class="org.prisongame.game.Game">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

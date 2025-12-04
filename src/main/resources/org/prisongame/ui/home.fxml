@@ -99,7 +99,7 @@
         <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="2">
             <!-- Scrollable text area fills remaining height of this row -->
             <ScrollPane fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
-                <TextArea editable="false" fx:id="terminalOut" styleClass="borderless-text-area" wrapText="true">
+                <TextArea editable="false" fx:id="terminalOut" wrapText="true">
                </TextArea>
             </ScrollPane>
 

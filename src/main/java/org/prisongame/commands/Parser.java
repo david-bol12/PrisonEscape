@@ -17,4 +17,15 @@ public class Parser {
         }
         return new Command(firstWord, secondWord);
     }
+
+    public static String removeSpaces(String string) {
+        StringBuilder builder = new StringBuilder();
+        String[] words = string.split(" ");
+        for (String word : words) {
+            builder.append(word);
+            builder.append("-");
+        }
+        builder.deleteCharAt(builder.length() - 1);
+        return builder.toString();
+    }
 }

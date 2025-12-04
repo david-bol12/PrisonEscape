@@ -122,12 +122,17 @@ public class BlackjackGame extends Minigame {
         if (result != null) {
             // Game is over: handle the payout and transition out of the minigame
             if (state == GameState.QUERY) {
-                if (command.getCommandWord().equalsIgnoreCase("y")) {
-                    return new BlackjackGame(output, input, player);
+                switch (command.getCommandWord()) {
+                    case "yes", "y":
+                        return new BlackjackGame(output, input, player);
+                    case "no", "n":
+                        output.println("OK Goodbye!");
+                        SoundController.stopPlayer();
+                        return null;
+                    default:
+                        output.println("Please enter 'yes' or 'no'");
+                        return this;
                 }
-                output.println("OK Goodbye!");
-                SoundController.stopPlayer();
-                return null;
             }
 
             output.println((result.amountWon < 0 ? "You Lose: " : "You Win: ") + "$" + Math.abs(result.amountWon));

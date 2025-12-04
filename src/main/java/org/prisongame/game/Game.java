@@ -19,13 +19,13 @@ import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import org.prisongame.character.Player;
+import org.prisongame.character.Processer;
 import org.prisongame.commands.Command;
 import org.prisongame.commands.CommandHelp;
 import org.prisongame.commands.Parser;
 import org.prisongame.items.Item;
 import org.prisongame.map.GameMapState;
 import org.prisongame.map.Location;
-import org.prisongame.minigame.BlackjackGame;
 import org.prisongame.minigame.Minigame;
 import org.prisongame.ui.GameGUI;
 import org.prisongame.ui.Input;
@@ -36,17 +36,17 @@ import java.util.Objects;
 import java.util.concurrent.Flow;
 
 public class Game implements Flow.Subscriber<String> {
-    private final Player player;
-    private final Output output;
-    private final Input input;
+    private static Player player = null;
+    private static Output output = null;
+    private static Input input = null;
     private Flow.Subscription subscription;
-    private Minigame currentMinigame = null;
-    private final ObjectProperty<Boolean> maximiseTerminal = new SimpleObjectProperty<>(false);
+    private static Processer subProcess = null;
+    private static final ObjectProperty<Boolean> maximiseTerminal = new SimpleObjectProperty<>(false);
 
-    public Game(Output output, Input input, Player player) {
-        this.output = output;
-        this.input = input;
-        this.player = player;
+    public Game(Output inOutput, Input inInput, Player inPlayer) {
+        output = inOutput;
+        input = inInput;
+        player = inPlayer;
         initCommandHelp();
     }
 
@@ -94,22 +94,6 @@ public class Game implements Flow.Subscriber<String> {
         } else {
 
             switch (commandWord) {
-                case "newgame":
-                    System.out.println("running");
-                    GameGUI.startGame(GameGUI.stage);
-                    System.out.println("ran");
-                    break;
-                case "delay":
-                    output.println("Waiting...");
-                    input.disablePeriod(1000);
-                    output.println("Done!");
-                case "money":
-                    player.setMoney(20);
-                    break;
-                case "test":
-                    output.println("--- Welcome to Blackjack! ---");
-                    setCurrentMinigame(new BlackjackGame(output, input, player));
-                    break;
                 case "study":
                     output.println(player.study());
                     break;
@@ -129,8 +113,8 @@ public class Game implements Flow.Subscriber<String> {
                 case "search":
                     output.println(player.getCurrentRoom().searchRoom());
                     break;
-                case "pickup":
-                    Item pickupItem = Item.checkItemAvailable(command.getSecondWord(), player.getCurrentRoom().getItems());
+                case "pickup", "take":
+                    Item pickupItem = player.getCurrentRoom().getItems().checkObjectAvailable(command.getSecondWord());
                     if (pickupItem == null) {
                         output.println("I can't find that item!");
                     } else {
@@ -139,11 +123,11 @@ public class Game implements Flow.Subscriber<String> {
                     break;
                 case "inventory":
                     output.println("Inventory:");
-                    for (Item item : player.getInventory()) {
+                    for (Item item : player.getInventoryList()) {
                         output.println(item.getName());
                     }
                     break;
-                case "drop":
+                case "drop", "place":
                     output.println(getPlayer().dropItem(command.getSecondWord()));
                     break;
                 case "eat":
@@ -160,6 +144,14 @@ public class Game implements Flow.Subscriber<String> {
                         Platform.exit();
                     }
                     break;
+                case "talk":
+                    player.talk(command.getSecondWord());
+                    break;
+                case "inspect":
+                    Item item = player.getInventory().checkObjectAvailable(command.getSecondWord());
+                    assert item != null;
+                    output.println(item.getName() + " - " + item.getDescription());
+                    break;
                 default:
                     output.println("I don't know what you mean...");
                     break;
@@ -167,17 +159,17 @@ public class Game implements Flow.Subscriber<String> {
         }
     }
 
-    private void setCurrentMinigame(Minigame minigame) {
-        if (minigame == null) {
-            maximiseTerminal.set(false);
-        } else {
+    public static void setSubProcess(Processer inSubProcess) {
+        if (inSubProcess instanceof Minigame) {
             maximiseTerminal.set(true);
+        } else {
+            maximiseTerminal.set(false);
         }
 
-        this.currentMinigame = minigame;
+        subProcess = inSubProcess;
     }
 
-    public Player getPlayer() {
+    public static Player getPlayer() {
         return player;
     }
 
@@ -185,7 +177,13 @@ public class Game implements Flow.Subscriber<String> {
         return maximiseTerminal;
     }
 
+    public static Input getInput() {
+        return input;
+    }
 
+    public static Output getOutput() {
+        return output;
+    }
 
     @Override
     public void onSubscribe(Flow.Subscription subscription) {
@@ -197,9 +195,9 @@ public class Game implements Flow.Subscriber<String> {
     public void onNext(String item) {
         output.printCommand(item);
         Command command = Parser.parseCommand(item);
-        if (currentMinigame != null) {
+        if (subProcess != null) {
             try {
-                setCurrentMinigame(currentMinigame.processCommand(command));
+                setSubProcess(subProcess.processCommand(command));
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

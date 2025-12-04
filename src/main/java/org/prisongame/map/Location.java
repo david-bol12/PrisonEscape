@@ -1,6 +1,8 @@
 package org.prisongame.map;
 
-public enum Location {
+import java.io.Serializable;
+
+public enum Location implements Serializable {
     //Floor 1
     CELL_BLOCK,
         //Cells

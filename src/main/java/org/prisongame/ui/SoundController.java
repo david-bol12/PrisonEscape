@@ -67,13 +67,15 @@ public class SoundController {
     }
 
     public static void playSFX(Sound sound) {
-        MediaPlayer sfxPlayer = new MediaPlayer(sound.getSound());
-        if (backgroundPlayer != null) backgroundPlayer.pause();
-        sfxPlayer.setOnEndOfMedia(() -> {
-            sfxPlayer.dispose();
-            if (backgroundPlayer != null) backgroundPlayer.play();
+        Platform.runLater(() -> {
+            MediaPlayer sfxPlayer = new MediaPlayer(sound.getSound());
+            if (backgroundPlayer != null) backgroundPlayer.pause();
+            sfxPlayer.setOnEndOfMedia(() -> {
+                sfxPlayer.dispose();
+                if (backgroundPlayer != null) backgroundPlayer.play();
+            });
+            sfxPlayer.play();
         });
-        sfxPlayer.play();
     }
 }
 

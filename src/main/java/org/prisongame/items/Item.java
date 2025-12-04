@@ -2,16 +2,19 @@ package org.prisongame.items;
 
 
 import org.prisongame.map.Room;
+import org.prisongame.utils.ContainerObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Item implements Serializable {
+public class Item implements Serializable, ContainerObject {
     private String description;
     private String name;
     private Room location;
     private int id;
     private boolean isVisible;
+    private int value = 0;
+    private boolean droppable = true;
 
     public Item(String name, String description) {
         this.name = name;
@@ -19,13 +22,19 @@ public class Item implements Serializable {
         this.isVisible = true;
     }
 
-    public static Item checkItemAvailable(String itemName, ArrayList<Item> items) {
-        for (Item item : items) {
-            if (item.getName().toLowerCase().equals(itemName)) {
-                return item;
-            }
-        }
-        return null;
+    public Item(String name, String description, int value) {
+        this.name = name;
+        this.description = description;
+        this.isVisible = true;
+        this.value = value;
+    }
+
+    public Item(String name, String description, int value, boolean droppable) {
+        this.name = name;
+        this.description = description;
+        this.isVisible = true;
+        this.value = value;
+        this.droppable = droppable;
     }
 
     public String getDescription() {
@@ -66,5 +75,13 @@ public class Item implements Serializable {
 
     public void setVisible(boolean visible) {
         isVisible = visible;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public boolean isDroppable() {
+        return droppable;
     }
 }
